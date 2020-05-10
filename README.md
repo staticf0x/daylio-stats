@@ -17,4 +17,6 @@ This will save a png file with the plot.
 - Try to detect periods of good/bad moods
 - Try to detect rapid mood changes
 - Make a word cloud from notes and assign them to moods
-
+- Support for more than 5 moods
+- Support for custom colors
+- Make everything a Django (or just Flask?) app and allow ppl to run it in browser
