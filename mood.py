@@ -11,11 +11,11 @@ import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 
-default_output_name = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
+DEFAULT_OUTPUT_NAME = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
 
 parser = argparse.ArgumentParser()
 parser.add_argument('path', type=str, help='Path to the Dailyo export')
-parser.add_argument('--output', '-o', type=str, default=default_output_name,
+parser.add_argument('--output', '-o', type=str, default=DEFAULT_OUTPUT_NAME,
                     help='Ouptut path for the plot')
 
 args = parser.parse_args()
@@ -50,7 +50,6 @@ def read_raw_moods(path):
 
         for row in csv_reader:
             date = row[0]
-            time = row[3]
             mood_str = row[4]
             mood = MOODS[mood_str]
 
@@ -93,15 +92,15 @@ def interpolate(data, steps=24):
     moods = []
     step = 1440//steps  # Step size in minutes
 
-    for i in range(len(data)):
+    for i in range(len(data)):  # pylint: disable=consider-using-enumerate
         current_point = data[i]
 
         try:
             next_point = data[i + 1]
         except IndexError:
             # Add last day as the date on midnight
-            t = datetime.time(hour=0, minute=0)
-            next_dt = current_point[0].combine(current_point[0], t)
+            next_time = datetime.time(hour=0, minute=0)
+            next_dt = current_point[0].combine(current_point[0], next_time)
 
             dates.append(next_dt)
             moods.append(current_point[1])
@@ -121,8 +120,8 @@ def interpolate(data, steps=24):
             hour = 0 if step_n == 0 else (step*step_n)//60
             minute = 0 if step_n == 0 else (step*step_n)%60
 
-            t = datetime.time(hour=int(hour), minute=int(minute))
-            next_dt = current_point[0].combine(current_point[0], t)
+            next_time = datetime.time(hour=int(hour), minute=int(minute))
+            next_dt = current_point[0].combine(current_point[0], next_time)
 
             dates.append(next_dt)
             moods.append(next_value)
