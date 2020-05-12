@@ -6,12 +6,17 @@ Main file to read the CSV and save a plot
 
 import argparse
 import csv
+import time
 import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 
+default_output_name = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
+
 parser = argparse.ArgumentParser()
 parser.add_argument('path', type=str, help='Path to the Dailyo export')
+parser.add_argument('--output', '-o', type=str, default=default_output_name,
+                    help='Ouptut path for the plot')
 
 args = parser.parse_args()
 
@@ -172,4 +177,4 @@ plt.grid()
 
 # Show/save the plot
 # plt.show()
-plt.savefig('dailyo.png')
+plt.savefig(args.output, dpi=120)
