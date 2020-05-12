@@ -18,7 +18,6 @@ class Plot:
     def __init__(self, avg_moods):
         self.__avg_moods = avg_moods
         self.interpolate_steps = 720  # Number of steps per day
-        self.rolling_window_size = 10  # Rolling mean window size
 
     def plot_average_moods(self, output_name=None):
         """
@@ -28,36 +27,40 @@ class Plot:
         if not output_name:
             output_name = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
 
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
+        fig, axes = plt.subplots(4, 1, figsize=(12, 16))
 
         print('Plotting mood chart...')
 
         dates, masked_data = self.__plot_data(self.__avg_moods)
         plot_args = self.__plot_args(dates, masked_data)
 
-        ax1.plot(*plot_args)
-        ax1.set_title('Average mood in each day')
-        ax1.set_xlabel('Date')
-        ax1.set_ylabel('Mood')
-        ax1.set_yticks(np.arange(1, len(config.MOODS) + 1, 1))
-        ax1.grid()
+        axes[0].plot(*plot_args)
+        axes[0].set_title('Average mood in each day')
+        axes[0].set_xlabel('Date')
+        axes[0].set_ylabel('Mood')
+        axes[0].set_yticks(np.arange(1, len(config.MOODS) + 1, 1))
+        axes[0].grid()
 
-        print('Plotting rolling average chart...')
-
-        dates, masked_data = self.__plot_data(self.__rolling_mean(self.__avg_moods))
-        plot_args = self.__plot_args(dates, masked_data)
-
-        ax2.plot(*plot_args)
-        ax2.set_title(f'Rolling average of moods, window size = {self.rolling_window_size}')
-        ax2.set_xlabel('Date')
-        ax2.set_ylabel('Mood')
-        ax2.set_yticks(np.arange(1, len(config.MOODS) + 1, 1))
-        ax2.grid()
+        self.__plot_rolling_means(axes[1:])
 
         print(f'Chart saved to: {output_name}')
 
         plt.tight_layout()
         plt.savefig(output_name, dpi=120)
+
+    def __plot_rolling_means(self, axes):
+        for i, n in enumerate((5, 10, 20)):
+            print(f'Plotting rolling average chart, N = {n}...')
+
+            dates, masked_data = self.__plot_data(self.__rolling_mean(self.__avg_moods, n))
+            plot_args = self.__plot_args(dates, masked_data)
+
+            axes[i].plot(*plot_args)
+            axes[i].set_title(f'Rolling average of moods, window size = {n}')
+            axes[i].set_xlabel('Date')
+            axes[i].set_ylabel('Mood')
+            axes[i].set_yticks(np.arange(1, len(config.MOODS) + 1, 1))
+            axes[i].grid()
 
     def __plot_args(self, dates, masked_data):
         plot_args = []
@@ -143,8 +146,7 @@ class Plot:
 
         return split_data
 
-    def __rolling_mean(self, source_data):
-        N = self.rolling_window_size
+    def __rolling_mean(self, source_data, N=5):
         data = np.array(source_data)
 
         # Compute the rolling mean for our data
