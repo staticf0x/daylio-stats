@@ -34,6 +34,8 @@ class DataLoader:
         Read mood data from CSV file
         """
 
+        print('Loading source data...')
+
         data_tmp = {}
 
         with open(self.__csv_path) as fread:
@@ -55,6 +57,8 @@ class DataLoader:
         Go through the raw data (date: mood list) and compute average
         values for each day
         """
+
+        print('Computing average moods...')
 
         data = []
 

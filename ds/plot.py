@@ -18,9 +18,7 @@ class Plot:
     def __init__(self, avg_moods):
         self.__avg_moods = avg_moods
         self.interpolate_steps = 720  # Number of steps per day
-        self.__dates = None
-        self.__moods = None
-        self.__masked_data = dict.fromkeys(config.BOUNDARIES.keys())
+        self.rolling_window_size = 10  # Rolling mean window size
 
     def plot_average_moods(self, output_name=None):
         """
@@ -30,28 +28,54 @@ class Plot:
         if not output_name:
             output_name = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
 
-        self.__interpolate()
-        self.__split_into_bands()
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
 
-        fig, ax = plt.subplots(1, 1, figsize=(12, 4))
+        print('Plotting mood chart...')
 
+        dates, masked_data = self.__plot_data(self.__avg_moods)
+        plot_args = self.__plot_args(dates, masked_data)
+
+        ax1.plot(*plot_args)
+        ax1.set_title('Average mood in each day')
+        ax1.set_xlabel('Date')
+        ax1.set_ylabel('Mood')
+        ax1.set_yticks(np.arange(1, len(config.MOODS) + 1, 1))
+        ax1.grid()
+
+        print('Plotting rolling average chart...')
+
+        dates, masked_data = self.__plot_data(self.__rolling_mean(self.__avg_moods))
+        plot_args = self.__plot_args(dates, masked_data)
+
+        ax2.plot(*plot_args)
+        ax2.set_title(f'Rolling average of moods, window size = {self.rolling_window_size}')
+        ax2.set_xlabel('Date')
+        ax2.set_ylabel('Mood')
+        ax2.set_yticks(np.arange(1, len(config.MOODS) + 1, 1))
+        ax2.grid()
+
+        print(f'Chart saved to: {output_name}')
+
+        plt.tight_layout()
+        plt.savefig(output_name, dpi=120)
+
+    def __plot_args(self, dates, masked_data):
         plot_args = []
 
         for mood_name, color in config.COLORS.items():
-            plot_args.append(self.__dates)
-            plot_args.append(self.__masked_data[mood_name])
+            plot_args.append(dates)
+            plot_args.append(masked_data[mood_name])
             plot_args.append(color)
 
-        ax.plot(*plot_args)
+        return plot_args
 
-        ax.set_xlabel('Date')
-        ax.set_ylabel('Mood')
-        ax.set_yticks(np.arange(1, len(config.MOODS) + 1, 1))
-        plt.grid()
+    def __plot_data(self, source_data):
+        dates, moods = self.__interpolate(source_data)
+        split_data = self.__split_into_bands(moods)
 
-        plt.savefig(output_name, dpi=120)
+        return dates, split_data
 
-    def __interpolate(self):
+    def __interpolate(self, avg_moods):
         """
         Interpolate missing values between midnights
         """
@@ -65,11 +89,14 @@ class Plot:
         moods = []
         step = 1440//steps  # Step size in minutes
 
-        for i in range(len(self.__avg_moods)):  # pylint: disable=consider-using-enumerate
-            current_point = self.__avg_moods[i]
+        for i in range(len(avg_moods)):  # pylint: disable=consider-using-enumerate
+            current_point = avg_moods[i]
+
+            if np.isnan(current_point[1]):
+                continue
 
             try:
-                next_point = self.__avg_moods[i + 1]
+                next_point = avg_moods[i + 1]
             except IndexError:
                 # Add last day as the date on midnight
                 next_time = datetime.time(hour=0, minute=0)
@@ -99,16 +126,37 @@ class Plot:
                 dates.append(next_dt)
                 moods.append(next_value)
 
-        self.__dates = np.array(dates)
-        self.__moods = np.array(moods)
+        return np.array(dates), np.array(moods)
 
-    def __split_into_bands(self):
+    def __split_into_bands(self, moods):
+        split_data = dict.fromkeys(config.BOUNDARIES.keys())
+
         for mood_name, boundaries in config.BOUNDARIES.items():
             # boundaries is a tuple of (low, high)
             # Upper bound
-            masked_data = np.ma.masked_where(self.__moods >= boundaries[1], self.__moods)
+            masked_data = np.ma.masked_where(moods >= boundaries[1], moods)
 
             # Lower bound -- already working with partly masked data
-            masked_data = np.ma.masked_where(self.__moods < boundaries[0], masked_data)
+            masked_data = np.ma.masked_where(moods < boundaries[0], masked_data)
 
-            self.__masked_data[mood_name] = masked_data
+            split_data[mood_name] = masked_data
+
+        return split_data
+
+    def __rolling_mean(self, source_data):
+        N = self.rolling_window_size
+        data = np.array(source_data)
+
+        # Compute the rolling mean for our data
+        # Moods are stored in the 1st column, dates in 0th
+        filtered_data = np.convolve(data[:, 1], np.ones((N, ))/N, mode='valid')
+
+        # Fill the missing entries with NaN,
+        # so we can replace the original column
+        # with filtered data
+        nans = np.zeros(N - 1)
+        nans[:] = np.nan
+        filtered_data = np.concatenate((nans, filtered_data))
+        data[:, 1] = filtered_data
+
+        return data
