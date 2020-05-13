@@ -40,6 +40,9 @@ class DataLoader:
     def __load_raw_data(self):
         """
         Read mood data from CSV file
+
+        WARNING: Daylio saves the time in either 12 or 24 hour format
+        so if we later need also time, be warned
         """
 
         print('Loading source data...')
