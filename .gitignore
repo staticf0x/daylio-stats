@@ -1,2 +1,2 @@
-*.csv
-*.png
+node_modules/
+.ds_secret_key

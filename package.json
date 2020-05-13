@@ -1,0 +1,14 @@
+{
+  "name": "dailyo-stats",
+  "version": "1.0.0",
+  "main": "ds/static/css/sass/bulma-ds.sass",
+  "license": "MIT",
+  "devDependencies": {
+    "bulma": "^0.8.2",
+    "node-sass": "^4.14.1"
+  },
+  "scripts": {
+    "css-build": "node-sass --omit-source-map-url --output-style compressed ds/static/css/sass/bulma-ds.sass ds/static/css/bulma-ds.min.css"
+  },
+  "dependencies": {}
+}

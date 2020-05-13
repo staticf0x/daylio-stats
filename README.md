@@ -1,16 +1,40 @@
 # dailyo-stats
 
-A simple script to generate a plot based on Dailyo export CSV file.
+A tool to generate stats/charts from Dailyo CSV exports
 
-## Usage
+## Running locally
+
+### Installation
+
+After cloning the repo:
+
+- `$ npm install`
+- `$ pipenv install`
+
+### Secret key for Django
+
+Either set the `DS_SECRET_KEY` env variable directly, or read the key from a file.
+
+For bash:
 
 ```
-$ pipenv install
+$ export DS_SECRET_KEY=$(cat .ds_secret_key)
+```
+
+For fish:
+
+```
+$ set -x DS_SECRET_KEY (cat .ds_secret_key)
+```
+
+### Run the development server
+
+For port 8000:
+
+```
 $ pipenv shell
-$ ./mood.py <path to CSV file>
+$ ./manage.py runserver 8000
 ```
-
-This will save a png file with the plot.
 
 ## TODOs
 
@@ -20,3 +44,5 @@ This will save a png file with the plot.
 - Support for more than 5 moods
 - Support for custom colors
 - Make everything a Django (or just Flask?) app and allow ppl to run it in browser
+- Add custom config for the charts -- configurable charts, colors, etc
+    + And also create an URL to save the config

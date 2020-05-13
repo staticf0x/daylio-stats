@@ -6,7 +6,7 @@ Data loader
 import csv
 import datetime
 import numpy as np
-from ds import config
+from ds.lib import config
 
 
 class DataLoader:
