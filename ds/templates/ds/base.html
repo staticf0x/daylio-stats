@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Dailyo stats</title>
+    <title>Daylio stats</title>
 
     <!-- Styles -->
     <link rel="stylesheet" href="{% static 'css/bulma-ds.min.css' %}">
@@ -20,14 +20,6 @@
 <body>
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <!-- TODO: Add some icon or something -->
-            <a class="navbar-item" href="{% url 'ds:index' %}">
-                <span class="icon">
-                    <i class="fas fa-home"></i>
-                </span>
-            </a>
-
-            <!-- TODO: This will probably need some JS to control -->
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -37,12 +29,30 @@
 
         <div id="main-nav" class="navbar-menu">
             <div class="navbar-start">
+                <a class="navbar-item has-text-danger" href="{% url 'ds:index' %}">
+                    <span class="icon">
+                        <i class="fas fa-chart-line"></i>
+                    </span>
+
+                    <span>
+                        Get your charts
+                    </span>
+                </a>
+
                 <a href="{% url 'ds:about' %}" class="navbar-item">
-                    About
+                    <span class="icon">
+                        <i class="fas fa-info"></i>
+                    </span>
+
+                    <span>About</span>
                 </a>
 
                 <a href="{% url 'ds:contributing' %}" class="navbar-item">
-                    Contributing
+                    <span class="icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </span>
+
+                    <span>Contributing</span>
                 </a>
             </div>
         </div>

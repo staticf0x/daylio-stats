@@ -15,7 +15,15 @@ class DataLoader:
     """
 
     def __init__(self, path):
-        self.__csv_path = path
+        self.__csv_path = '';
+        self.__buf = None
+
+        if isinstance(path, str):
+            self.__csv_path = path
+        else:
+            # Let's accept also BytesIO
+            self.__buf = path
+
         self.__raw_data = {}
         self.__avg_moods = []
 
@@ -38,17 +46,18 @@ class DataLoader:
 
         data_tmp = {}
 
-        with open(self.__csv_path) as fread:
-            csv_reader = csv.reader(fread, delimiter=',', quotechar='"')
-            next(csv_reader)  # Skip header
+        fread = self.__buf if self.__buf else open(self.__csv_path, 'r')
 
-            for row in csv_reader:
-                date = row[0]
-                mood_str = row[4]
-                mood = config.MOODS[mood_str]
+        csv_reader = csv.reader(fread, delimiter=',', quotechar='"')
+        next(csv_reader)  # Skip header
 
-                data_tmp.setdefault(date, [])
-                data_tmp[date].append(mood)
+        for row in csv_reader:
+            date = row[0]
+            mood_str = row[4]
+            mood = config.MOODS[mood_str]
+
+            data_tmp.setdefault(date, [])
+            data_tmp[date].append(mood)
 
         self.__raw_data = data_tmp
 

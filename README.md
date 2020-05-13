@@ -1,6 +1,6 @@
-# dailyo-stats
+# daylio-stats
 
-A tool to generate stats/charts from Dailyo CSV exports
+A tool to generate stats/charts from Daylio CSV exports
 
 ## Running locally
 

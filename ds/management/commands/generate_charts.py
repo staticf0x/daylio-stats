@@ -16,7 +16,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         DEFAULT_OUTPUT_NAME = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
 
-        parser.add_argument('path', type=str, help='Path to the Dailyo export')
+        parser.add_argument('path', type=str, help='Path to the Daylio export')
         parser.add_argument('--output', '-o', type=str, default=DEFAULT_OUTPUT_NAME,
                             help='Ouptut path for the plot')
 

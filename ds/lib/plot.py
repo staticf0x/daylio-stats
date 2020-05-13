@@ -3,7 +3,7 @@
 A class for plotting the data
 """
 
-import time
+import io
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,11 +21,12 @@ class Plot:
 
     def plot_average_moods(self, output_name=None):
         """
-        Plot the average mood data into a PNG file
-        """
+        Plot the average mood data into a PNG file.
+        If output_name is not provided, returns a buffer
+        with the image data. Otherwise returns the output_name.
 
-        if not output_name:
-            output_name = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
+        TODO: Might not be a good idea to return two different things
+        """
 
         fig, axes = plt.subplots(4, 1, figsize=(12, 16))
 
@@ -46,7 +47,18 @@ class Plot:
         print(f'Chart saved to: {output_name}')
 
         plt.tight_layout()
-        plt.savefig(output_name, dpi=120)
+
+        if output_name:
+            fwrite = output_name
+        else:
+            fwrite = io.BytesIO()
+
+        plt.savefig(fwrite, dpi=120)
+
+        if not output_name:
+            fwrite.seek(0)
+
+        return fwrite
 
     def __plot_rolling_means(self, axes):
         for i, n in enumerate((5, 10, 20)):

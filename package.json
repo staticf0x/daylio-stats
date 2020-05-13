@@ -1,5 +1,5 @@
 {
-  "name": "dailyo-stats",
+  "name": "daylio-stats",
   "version": "1.0.0",
   "main": "ds/static/css/sass/bulma-ds.sass",
   "license": "MIT",
