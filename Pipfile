@@ -9,6 +9,7 @@ pylint = "*"
 [packages]
 numpy = "*"
 matplotlib = "*"
+django = "*"
 
 [requires]
 python_version = "3.7"
