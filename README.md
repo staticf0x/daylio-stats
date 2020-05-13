@@ -35,14 +35,3 @@ For port 8000:
 $ pipenv shell
 $ ./manage.py runserver 8000
 ```
-
-## TODOs
-
-- Try to detect periods of good/bad moods
-- Try to detect rapid mood changes
-- Make a word cloud from notes and assign them to moods
-- Support for more than 5 moods
-- Support for custom colors
-- Make everything a Django (or just Flask?) app and allow ppl to run it in browser
-- Add custom config for the charts -- configurable charts, colors, etc
-    + And also create an URL to save the config
