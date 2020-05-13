@@ -13,13 +13,15 @@
     <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}">
 
     <!-- JS -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/ds.js' %}"></script>
 </head>
 
 <body>
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
             <!-- TODO: Add some icon or something -->
-            <a class="navbar-item" href="{% url 'index' %}">
+            <a class="navbar-item" href="{% url 'ds:index' %}">
                 <span class="icon">
                     <i class="fas fa-home"></i>
                 </span>
@@ -35,8 +37,12 @@
 
         <div id="main-nav" class="navbar-menu">
             <div class="navbar-start">
-                <a href="{% url 'index' %}" class="navbar-item">
-                    yoyoyo
+                <a href="{% url 'ds:about' %}" class="navbar-item">
+                    About
+                </a>
+
+                <a href="{% url 'ds:contributing' %}" class="navbar-item">
+                    Contributing
                 </a>
             </div>
         </div>
@@ -44,9 +50,7 @@
 
     <div class="section">
         <div class="container">
-            <h1 class="title">Hello World</h1>
             {% block content %}
-
             {% endblock content %}
         </div>
     </div>

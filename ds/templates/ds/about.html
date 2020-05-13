@@ -1,0 +1,71 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+
+<h1 class="title">About</h1>
+
+<div class="content">
+    <p>
+        This project started as a simple tool to visualize data from <a href="https://daylio.webflow.io/" target="_blank">Dailyo</a>, an amazing mood tracker app for Android and iOS.
+
+        Since the official app doesn't have an option to see all data in one chart, I decided to create a simple script to do exactly that.
+    </p>
+
+    <p>
+        Since other folks on Reddit also wanted to get more from their data, I later decided to make it into a very simple web app.
+    </p>
+</div>
+
+<h2 class="title">Privacy policy</h2>
+
+<div class="content">
+    <ul>
+        <li>
+            This website <span class="has-text-weight-bold">does not</span> use cookies, trackers, ads or anything.
+        </li>
+        <li>
+            Your uploaded files are <span class="has-text-weight-bold">never</span> stored on the server. Once they're uploaded, they're immediately processed and discarded.
+        </li>
+    </ul>
+
+    <p>
+        If you want to make sure, you can see the source code for youself, see <a href="{% url 'ds:contributing' %}">Contributing</a>.
+    </p>
+</div>
+
+<h2 class="title">Future features</h2>
+
+<div class="content">
+    <p>
+        This is a pet project and there's a lot of ideas that I already thought about, including:
+    </p>
+
+    <ul>
+        <li>
+            <i class="fas fa-fw fa-wave-square"></i>
+            Try to detect periods of good/bad moods <span class="has-text-grey is-size-7">(I mean obviously you can see it with your own eyes, but come on, I'm hypomanic and want to do stuff)</span>
+        </li>
+        <li>
+            <i class="fas fa-fw fa-chart-line"></i>
+            Try to detect rapid mood changes (read above note lol)
+        </li>
+        <li>
+            <i class="fas fa-fw fa-cloud"></i>
+            Make a word cloud from notes and add relations to moods (in other words: what you most often mention in your entries)
+        </li>
+        <li>
+            <i class="fas fa-fw fa-palette"></i>
+            Support custom colors/themes
+        </li>
+        <li>
+            <i class="fas fa-fw fa-smile-beam"></i>
+            Support for more than 5 moods
+        </li>
+        <li>
+            <i class="fas fa-fw fa-save"></i>
+            Option to save the (future) config (via a generated URL or something)
+        </li>
+    </ul>
+</div>
+
+{% endblock content %}

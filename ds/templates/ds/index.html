@@ -1,5 +1,18 @@
-{% extends "ds/base.html" %}
+{% extends 'ds/base.html' %}
 
 {% block content %}
-{{ rad }}
+
+<h1 class="title">Dailyo stats</h1>
+
+<form action="" method="post">
+    <!-- TODO: Make it pretty with bulma -->
+    <div class="field">
+        <label for="csv" class="label">Your CSV file:</label>
+
+        <div class="control">
+            <input id="csv" type="file" name="csv">
+        </div>
+    </div>
+</form>
+
 {% endblock content %}
