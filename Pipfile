@@ -10,6 +10,7 @@ pylint = "*"
 numpy = "*"
 matplotlib = "*"
 django = "*"
+encodings = "*"
 
 [requires]
 python_version = "3.7"
