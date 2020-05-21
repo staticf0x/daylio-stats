@@ -1,3 +1,4 @@
 node_modules/
 .ds_secret_key
 staticfiles/
+daylio-plot-*
