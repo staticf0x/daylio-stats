@@ -17,7 +17,7 @@ class Plot:
 
     def __init__(self, avg_moods):
         self.__avg_moods = avg_moods
-        self.interpolate_steps = 720  # Number of steps per day
+        self.interpolate_steps = 360  # Number of steps per day
         self.plots = (5, )
 
     def plot_average_moods(self, output_name=None):
