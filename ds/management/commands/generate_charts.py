@@ -25,5 +25,7 @@ class Command(BaseCommand):
         loader = ds.lib.data.DataLoader(kwargs['path'])
         avg_moods = loader.load()
 
-        plot = ds.lib.plot.Plot(avg_moods)
+        plots = (5, 10, 20)
+
+        plot = ds.lib.plot.Plot(avg_moods, plots)
         plot.plot_average_moods(kwargs['output'])

@@ -15,10 +15,10 @@ class Plot:
     A class for interpolating and plotting the data
     """
 
-    def __init__(self, avg_moods):
+    def __init__(self, avg_moods, plots=(5, )):
         self.__avg_moods = avg_moods
         self.interpolate_steps = 360  # Number of steps per day
-        self.plots = (5, )
+        self.plots = plots
 
     def plot_average_moods(self, output_name=None):
         """
