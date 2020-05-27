@@ -18,6 +18,7 @@ class Plot:
     def __init__(self, avg_moods):
         self.__avg_moods = avg_moods
         self.interpolate_steps = 720  # Number of steps per day
+        self.plots = (5, )
 
     def plot_average_moods(self, output_name=None):
         """
@@ -28,7 +29,11 @@ class Plot:
         TODO: Might not be a good idea to return two different things
         """
 
-        fig, axes = plt.subplots(4, 1, figsize=(12, 16))
+        count_plots = 1 + len(self.plots)
+
+        fig, axes = plt.subplots(count_plots,
+                                 1,
+                                 figsize=(12, 4*count_plots))
 
         print('Plotting mood chart...')
 
@@ -61,7 +66,7 @@ class Plot:
         return fwrite
 
     def __plot_rolling_means(self, axes):
-        for i, n in enumerate((5, 10, 20)):
+        for i, n in enumerate(self.plots):
             print(f'Plotting rolling average chart, N = {n}...')
 
             dates, masked_data = self.__plot_data(self.__rolling_mean(self.__avg_moods, n))
