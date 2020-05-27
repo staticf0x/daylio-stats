@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['DS_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['daylio-stats.herokuapp.com']
+ALLOWED_HOSTS = ['daylio-stats.herokuapp.com', 'localhost']
 
 
 # Application definition
