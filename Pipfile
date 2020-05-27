@@ -10,6 +10,7 @@ pylint = "*"
 numpy = "*"
 matplotlib = "*"
 django = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
