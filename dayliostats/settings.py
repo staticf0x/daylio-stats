@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['DS_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['daylio-stats.herokuapp.com']
 
 
 # Application definition
@@ -123,3 +123,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SECURE_REFERRER_POLICY = 'same-origin'
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT, 'static'),
+]
