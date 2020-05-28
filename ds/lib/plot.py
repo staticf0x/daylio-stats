@@ -35,8 +35,6 @@ class Plot:
                                  1,
                                  figsize=(12, 4*count_plots))
 
-        print('Plotting mood chart...')
-
         dates, masked_data = self.__plot_data(self.__avg_moods)
         plot_args = self.__plot_args(dates, masked_data)
 
@@ -48,8 +46,6 @@ class Plot:
         axes[0].grid()
 
         self.__plot_rolling_means(axes[1:])
-
-        print(f'Chart saved to: {output_name}')
 
         plt.tight_layout()
 
@@ -67,8 +63,6 @@ class Plot:
 
     def __plot_rolling_means(self, axes):
         for i, n in enumerate(self.plots):
-            print(f'Plotting rolling average chart, N = {n}...')
-
             dates, masked_data = self.__plot_data(self.__rolling_mean(self.__avg_moods, n))
             plot_args = self.__plot_args(dates, masked_data)
 

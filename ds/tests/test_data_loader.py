@@ -16,24 +16,24 @@ class TestsDataLoader(TestCase):
         Create the DataLoader
         """
 
-        self.dl = dl = DataLoader(os.path.join(BASE_DIR, 'ds', 'tests', 'data', 'test_data.csv'))
+        self.dl = DataLoader(os.path.join(BASE_DIR, 'ds', 'tests', 'data', 'test_data.csv'))
+        self.dl.load()
 
     def test_load_all_data(self):
         """
         Test that all data is loaded
         """
 
-        data = self.dl.load()
+        data = self.dl.avg_moods
 
         self.assertEquals(len(data), 3)
-
 
     def test_average_moods(self):
         """
         Test average moods in the first and last day
         """
 
-        data = self.dl.load()
+        data = self.dl.avg_moods
 
         first_day = data[0]
         last_day = data[-1]

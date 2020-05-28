@@ -35,8 +35,6 @@ class DataLoader:
         self.__load_raw_data()
         self.__compute_avg_moods()
 
-        return self.avg_moods
-
     def __load_raw_data(self):
         """
         Read mood data from CSV file
@@ -44,8 +42,6 @@ class DataLoader:
         WARNING: Daylio saves the time in either 12 or 24 hour format
         so if we later need also time, be warned
         """
-
-        print('Loading source data...')
 
         data_tmp = {}
 
@@ -69,8 +65,6 @@ class DataLoader:
         Go through the raw data (date: mood list) and compute average
         values for each day
         """
-
-        print('Computing average moods...')
 
         data = []
 
