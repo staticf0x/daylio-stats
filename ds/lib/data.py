@@ -15,7 +15,7 @@ class DataLoader:
     """
 
     def __init__(self, path):
-        self.__csv_path = '';
+        self.__csv_path = ''
         self.__buf = None
 
         if isinstance(path, str):
