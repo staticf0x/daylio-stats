@@ -25,7 +25,7 @@ class DataLoader:
             self.__buf = path
 
         self.__raw_data = {}
-        self.__avg_moods = []
+        self.avg_moods = []
 
     def load(self):
         """
@@ -35,7 +35,7 @@ class DataLoader:
         self.__load_raw_data()
         self.__compute_avg_moods()
 
-        return self.__avg_moods
+        return self.avg_moods
 
     def __load_raw_data(self):
         """
@@ -82,4 +82,4 @@ class DataLoader:
 
         data.reverse()
 
-        self.__avg_moods = data
+        self.avg_moods = data
