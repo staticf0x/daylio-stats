@@ -5,8 +5,23 @@ Data loader
 
 import csv
 import datetime
+from dataclasses import dataclass
+from typing import List
 import numpy as np
 from ds.lib import config
+
+
+@dataclass
+class Entry:
+    """
+    Data for one day
+    """
+
+    datetime: datetime.datetime
+    mood: float
+    mood_str: str
+    activities: List[str]
+    notes: str
 
 
 class DataLoader:
@@ -26,6 +41,7 @@ class DataLoader:
 
         self.__raw_data = {}
         self.avg_moods = []
+        self.entries = []
 
     def load(self):
         """
@@ -58,7 +74,19 @@ class DataLoader:
             data_tmp.setdefault(date, [])
             data_tmp[date].append(mood)
 
+            dt = datetime.datetime.strptime(date, '%Y-%m-%d')
+
+            entry = Entry(
+                dt,
+                mood,
+                mood_str,
+                [] if row[5] == '' else row[5].split(' | '),
+                row[6]
+            )
+            self.entries.append(entry)
+
         self.__raw_data = data_tmp
+        self.entries.reverse()
 
     def __compute_avg_moods(self):
         """

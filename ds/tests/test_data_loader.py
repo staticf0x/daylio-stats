@@ -43,3 +43,26 @@ class TestsDataLoader(TestCase):
 
         self.assertEquals(last_day[0], datetime.datetime(2020, 5, 28))
         self.assertEquals(last_day[1], 4.6)
+
+    def test_entries(self):
+        """
+        Test loading all entries
+        """
+
+        entries = self.dl.entries
+
+        first_entry = entries[0]
+
+        self.assertEquals(first_entry.datetime, datetime.datetime(2020, 5, 25))
+        self.assertEquals(first_entry.mood, 3)
+        self.assertEquals(first_entry.mood_str, 'meh')
+        self.assertEquals(first_entry.activities, [])
+        self.assertEquals(first_entry.notes, '')
+
+        full_entry = entries[8]
+
+        self.assertEquals(full_entry.datetime, datetime.datetime(2020, 5, 27))
+        self.assertEquals(full_entry.mood, 4)
+        self.assertEquals(full_entry.mood_str, 'good')
+        self.assertEquals(full_entry.activities, ['work', 'good meal'])
+        self.assertEquals(full_entry.notes, 'Just good')
