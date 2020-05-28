@@ -11,9 +11,29 @@ from dayliostats.settings import BASE_DIR
 
 
 class TestsDataLoader(TestCase):
-    def test_load_csv(self):
-        dl = DataLoader(os.path.join(BASE_DIR, 'ds', 'tests', 'data', 'test_data.csv'))
-        data = dl.load()
+    def setUp(self):
+        """
+        Create the DataLoader
+        """
+
+        self.dl = dl = DataLoader(os.path.join(BASE_DIR, 'ds', 'tests', 'data', 'test_data.csv'))
+
+    def test_load_all_data(self):
+        """
+        Test that all data is loaded
+        """
+
+        data = self.dl.load()
+
+        self.assertEquals(len(data), 3)
+
+
+    def test_average_moods(self):
+        """
+        Test average moods in the first and last day
+        """
+
+        data = self.dl.load()
 
         first_day = data[0]
         last_day = data[-1]
