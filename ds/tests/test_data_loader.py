@@ -53,7 +53,7 @@ class TestsDataLoader(TestCase):
 
         first_entry = entries[0]
 
-        self.assertEquals(first_entry.datetime, datetime.datetime(2020, 5, 25))
+        self.assertEquals(first_entry.datetime, datetime.datetime(2020, 5, 25, 7, 9))
         self.assertEquals(first_entry.mood, 3)
         self.assertEquals(first_entry.mood_str, 'meh')
         self.assertEquals(first_entry.activities, [])
@@ -61,8 +61,21 @@ class TestsDataLoader(TestCase):
 
         full_entry = entries[8]
 
-        self.assertEquals(full_entry.datetime, datetime.datetime(2020, 5, 27))
+        self.assertEquals(full_entry.datetime, datetime.datetime(2020, 5, 27, 12, 20))
         self.assertEquals(full_entry.mood, 4)
         self.assertEquals(full_entry.mood_str, 'good')
         self.assertEquals(full_entry.activities, ['work', 'good meal'])
         self.assertEquals(full_entry.notes, 'Just good')
+
+    def test_both_hour_formats(self):
+        """
+        Test that both 12 and 24 hour formats are parsed
+        """
+
+        entries = self.dl.entries
+
+        entry_12h = entries[0]
+        entry_24h = entries[1]
+
+        self.assertEquals(entry_12h.datetime, datetime.datetime(2020, 5, 25, 7, 9))
+        self.assertEquals(entry_24h.datetime, datetime.datetime(2020, 5, 25, 14, 58))

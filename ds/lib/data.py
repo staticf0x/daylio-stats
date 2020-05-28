@@ -54,9 +54,6 @@ class DataLoader:
     def __load_raw_data(self):
         """
         Read mood data from CSV file
-
-        WARNING: Daylio saves the time in either 12 or 24 hour format
-        so if we later need also time, be warned
         """
 
         data_tmp = {}
@@ -67,21 +64,38 @@ class DataLoader:
         next(csv_reader)  # Skip header
 
         for row in csv_reader:
-            date = row[0]
+            # Raw data
+            date_str = row[0]
+            time_str = row[3]
             mood_str = row[4]
+            activities = row[5]
+            notes = row[6]
+
+            # Get mood as int
             mood = config.MOODS[mood_str]
 
-            data_tmp.setdefault(date, [])
-            data_tmp[date].append(mood)
+            # Add to raw data dict
+            data_tmp.setdefault(date_str, [])
+            data_tmp[date_str].append(mood)
 
-            dt = datetime.datetime.strptime(date, '%Y-%m-%d')
+            # Create entry object
+            dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+
+            try:
+                t = datetime.datetime.strptime(time_str, '%I:%M %p')
+            except ValueError:
+                t = datetime.datetime.strptime(time_str, '%H:%M')
+
+            # TODO: There has to be a better way
+            t = datetime.time(hour=t.hour, minute=t.minute)
+            dt = dt.combine(dt, t)
 
             entry = Entry(
                 dt,
                 mood,
                 mood_str,
-                [] if row[5] == '' else row[5].split(' | '),
-                row[6]
+                [] if activities == '' else activities.split(' | '),
+                notes
             )
             self.entries.append(entry)
 
