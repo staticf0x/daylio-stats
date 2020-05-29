@@ -36,6 +36,12 @@ $ pipenv shell
 $ ./manage.py runserver 8000
 ```
 
+### Or use gunicorn
+
+```
+$ gunicorn dayliostats.wsgi
+```
+
 ## Running tests
 
 ```
