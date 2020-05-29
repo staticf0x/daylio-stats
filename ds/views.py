@@ -62,11 +62,11 @@ def process(request):
 
     # Load the CSV
     loader = ds.lib.data.DataLoader(wrapped_file)
-    avg_moods = loader.load()
+    loader.load()
     buf.close()
 
     # Create the charts and save them into a buffer
-    plot = ds.lib.plot.Plot(avg_moods)
+    plot = ds.lib.plot.Plot(loader.avg_moods)
     buf = plot.plot_average_moods()
 
     # Send the buffer as an attachment to the client
