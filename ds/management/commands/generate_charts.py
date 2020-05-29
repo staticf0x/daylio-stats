@@ -22,10 +22,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # TODO: Check that the path exists
+        print('Loading data...')
+
         loader = ds.lib.data.DataLoader(kwargs['path'])
         avg_moods = loader.load()
 
         plots = (5, 10, 20)
 
+        print('Generating charts...')
         plot = ds.lib.plot.Plot(avg_moods, plots)
         plot.plot_average_moods(kwargs['output'])

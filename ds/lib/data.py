@@ -5,8 +5,23 @@ Data loader
 
 import csv
 import datetime
+from dataclasses import dataclass
+from typing import List
 import numpy as np
 from ds.lib import config
+
+
+@dataclass
+class Entry:
+    """
+    Data for one day
+    """
+
+    datetime: datetime.datetime
+    mood: float
+    mood_str: str
+    activities: List[str]
+    notes: str
 
 
 class DataLoader:
@@ -15,7 +30,7 @@ class DataLoader:
     """
 
     def __init__(self, path):
-        self.__csv_path = '';
+        self.__csv_path = ''
         self.__buf = None
 
         if isinstance(path, str):
@@ -25,7 +40,8 @@ class DataLoader:
             self.__buf = path
 
         self.__raw_data = {}
-        self.__avg_moods = []
+        self.avg_moods = []
+        self.entries = []
 
     def load(self):
         """
@@ -35,17 +51,10 @@ class DataLoader:
         self.__load_raw_data()
         self.__compute_avg_moods()
 
-        return self.__avg_moods
-
     def __load_raw_data(self):
         """
         Read mood data from CSV file
-
-        WARNING: Daylio saves the time in either 12 or 24 hour format
-        so if we later need also time, be warned
         """
-
-        print('Loading source data...')
 
         data_tmp = {}
 
@@ -55,22 +64,49 @@ class DataLoader:
         next(csv_reader)  # Skip header
 
         for row in csv_reader:
-            date = row[0]
+            # Raw data
+            date_str = row[0]
+            time_str = row[3]
             mood_str = row[4]
+            activities = row[5]
+            notes = row[6]
+
+            # Get mood as int
             mood = config.MOODS[mood_str]
 
-            data_tmp.setdefault(date, [])
-            data_tmp[date].append(mood)
+            # Add to raw data dict
+            data_tmp.setdefault(date_str, [])
+            data_tmp[date_str].append(mood)
+
+            # Create entry object
+            dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+
+            try:
+                t = datetime.datetime.strptime(time_str, '%I:%M %p')
+            except ValueError:
+                t = datetime.datetime.strptime(time_str, '%H:%M')
+
+            # TODO: There has to be a better way
+            t = datetime.time(hour=t.hour, minute=t.minute)
+            dt = dt.combine(dt, t)
+
+            entry = Entry(
+                dt,
+                mood,
+                mood_str,
+                [] if activities == '' else activities.split(' | '),
+                notes
+            )
+            self.entries.append(entry)
 
         self.__raw_data = data_tmp
+        self.entries.reverse()
 
     def __compute_avg_moods(self):
         """
         Go through the raw data (date: mood list) and compute average
         values for each day
         """
-
-        print('Computing average moods...')
 
         data = []
 
@@ -82,4 +118,4 @@ class DataLoader:
 
         data.reverse()
 
-        self.__avg_moods = data
+        self.avg_moods = data

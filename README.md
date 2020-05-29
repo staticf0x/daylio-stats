@@ -35,3 +35,15 @@ For port 8000:
 $ pipenv shell
 $ ./manage.py runserver 8000
 ```
+
+## Running tests
+
+```
+$ ./manage.py test
+```
+
+Pipenv should install `green` as a dependency for running tests. If not, try
+
+```
+$ pipenv install --dev
+```
