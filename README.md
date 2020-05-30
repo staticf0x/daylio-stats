@@ -27,6 +27,33 @@ For fish:
 $ set -x DS_SECRET_KEY (cat .ds_secret_key)
 ```
 
+### Database password
+
+Same as with the secret key:
+
+Either set the `DS_DB_PASSWORD` env variable directly, or read the key from a file.
+
+For bash:
+
+```
+$ export DS_DB_PASSWORD=$(cat .ds_db_password)
+```
+
+For fish:
+
+```
+$ set -x DS_DB_PASSWORD (cat .ds_db_password)
+```
+
+### Setting the dev environment
+
+Go to dayliostats/settings.py and set
+
+```
+DEBUG = True
+ADMIN = True
+```
+
 ### Run the development server
 
 For port 8000:

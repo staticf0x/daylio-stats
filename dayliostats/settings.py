@@ -24,6 +24,9 @@ SECRET_KEY = os.environ['DS_SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# This enabled the django admin console
+ADMIN = False
+
 ALLOWED_HOSTS = ['daylio-stats.herokuapp.com', 'localhost']
 
 
