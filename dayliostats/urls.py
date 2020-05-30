@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from dayliostats.settings import ADMIN
 
 urlpatterns = [
     path('', include('ds.urls', namespace='ds')),
 ]
+
+if ADMIN:
+    urlpatterns += [path('admin/', admin.site.urls),]
