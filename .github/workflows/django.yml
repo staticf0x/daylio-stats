@@ -30,3 +30,4 @@ jobs:
         python manage.py test
       env:
         DS_SECRET_KEY: test
+        DS_DB_PASSWORD: test
