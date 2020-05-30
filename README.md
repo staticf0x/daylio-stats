@@ -1,6 +1,19 @@
 # daylio-stats
 
-A tool to generate stats/charts from Daylio CSV exports
+A tool to generate stats/charts from Daylio CSV exports.
+
+Currently supports:
+
+- Creating a chart of all data since the beginning of tracking
+- Smoothing the chart with a rolling average
+
+Locally you can use:
+
+```
+$ ./manage.py generate_charts <path to Daylio CSV>
+```
+
+to get more charts than we're able to generate now on Heroku.
 
 ## Running locally
 
