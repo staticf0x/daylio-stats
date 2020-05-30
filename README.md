@@ -30,13 +30,13 @@ Either set the `DS_SECRET_KEY` env variable directly, or read the key from a fil
 
 For bash:
 
-```
+```bash
 $ export DS_SECRET_KEY=$(cat .ds_secret_key)
 ```
 
 For fish:
 
-```
+```fish
 $ set -x DS_SECRET_KEY (cat .ds_secret_key)
 ```
 
@@ -48,21 +48,21 @@ Either set the `DS_DB_PASSWORD` env variable directly, or read the key from a fi
 
 For bash:
 
-```
+```bash
 $ export DS_DB_PASSWORD=$(cat .ds_db_password)
 ```
 
 For fish:
 
-```
+```fish
 $ set -x DS_DB_PASSWORD (cat .ds_db_password)
 ```
 
 ### Setting the dev environment
 
-Go to dayliostats/settings.py and set
+Go to `dayliostats/settings.py` and set
 
-```
+```python
 DEBUG = True
 ADMIN = True
 ```
