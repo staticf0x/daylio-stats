@@ -1,4 +1,18 @@
 -i https://pypi.org/simple
+asgiref==3.2.7
+cycler==0.10.0
+django==3.0.6
+gunicorn==20.0.4
+kiwisolver==1.2.0
+matplotlib==3.2.1
+numpy==1.18.4
+psycopg2==2.8.5
+pyparsing==2.4.7
+python-dateutil==2.8.1
+pytz==2020.1
+six==1.15.0
+sqlparse==0.3.1
+whitenoise==5.1.0
 astroid==2.4.1
 colorama==0.4.3
 coverage==5.1
