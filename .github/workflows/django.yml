@@ -2,7 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+      - heroku
   pull_request:
     branches: [ master ]
 
