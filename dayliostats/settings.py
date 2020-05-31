@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'dayliostats.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['DS_DB_NAME'],
-        'USER': os.environ['DS_DB_USER'],
-        'PASSWORD': os.environ['DS_DB_PASSWORD'],
-        'HOST': os.environ['DS_DB_HOST'],
+        'NAME': 'dayliostats' if 'DS_DB_NAME' not in os.environ else os.environ['DS_DB_NAME'],
+        'USER': 'dayliostats' if 'DS_DB_USER' not in os.environ else os.environ['DS_DB_USER'],
+        'PASSWORD': '' if 'DS_DB_PASSWORD' not in os.environ else os.environ['DS_DB_PASSWORD'],
+        'HOST': 'localhost' if 'DS_DB_HOST' not in os.environ else os.environ['DS_DB_HOST'],
         'PORT': '',
     }
 }
