@@ -57,7 +57,7 @@ class TestStats(TestCase):
             (datetime.datetime(2020, 5, 30), 5.0),
         ]
 
-        self.__assert_rolling_mean_data_equal(data, expected_data)
+        self.__assert_mood_data_equal(data, expected_data)
 
     def test_rolling_mean_5(self):
         """
@@ -75,12 +75,47 @@ class TestStats(TestCase):
             (datetime.datetime(2020, 5, 30), 4.18),
         ]
 
-        self.__assert_rolling_mean_data_equal(data, expected_data)
+        self.__assert_mood_data_equal(data, expected_data)
 
-    def __assert_rolling_mean_data_equal(self, data, expected_data):
+    def test_interpolate(self):
+        # Use raw data
+        data = self.stats._Stats__avg_moods
+
+        dates, moods = self.stats.interpolate(data)
+
+        actual_data = zip(dates, moods)
+        expected_data = [
+            (datetime.datetime(2020, 5, 25, 0, 0), 2),
+            (datetime.datetime(2020, 5, 25, 6, 0), 2.575),
+            (datetime.datetime(2020, 5, 25, 12, 0), 3.15),
+            (datetime.datetime(2020, 5, 25, 18, 0), 3.725),
+            (datetime.datetime(2020, 5, 27, 0, 0), 4.3),
+            (datetime.datetime(2020, 5, 27, 6, 0), 4.375),
+            (datetime.datetime(2020, 5, 27, 12, 0), 4.45),
+            (datetime.datetime(2020, 5, 27, 18, 0), 4.525),
+            (datetime.datetime(2020, 5, 28, 0, 0), 4.6),
+            (datetime.datetime(2020, 5, 28, 6, 0), 4.7),
+            (datetime.datetime(2020, 5, 28, 12, 0), 4.8),
+            (datetime.datetime(2020, 5, 28, 18, 0), 4.9),
+            (datetime.datetime(2020, 5, 29, 0, 0), 5.0),
+            (datetime.datetime(2020, 5, 29, 6, 0), 5.0),
+            (datetime.datetime(2020, 5, 29, 12, 0), 5.0),
+            (datetime.datetime(2020, 5, 29, 18, 0), 5.0),
+            (datetime.datetime(2020, 5, 30, 0, 0), 5.0),
+            (datetime.datetime(2020, 5, 30, 6, 0), 5.0),
+            (datetime.datetime(2020, 5, 30, 12, 0), 5.0),
+            (datetime.datetime(2020, 5, 30, 18, 0), 5.0),
+        ]
+
+        self.__assert_mood_data_equal(actual_data, expected_data)
+
+
+    def __assert_mood_data_equal(self, data, expected_data):
         """
         Compare two arrays of (datetime, avg_mood)
         """
+
+        self.assertEquals(len(list(data)), len(list(expected_data)))
 
         for first, second in zip(data, expected_data):
             self.assertEquals(first[0], second[0])
@@ -89,4 +124,4 @@ class TestStats(TestCase):
                 self.assertTrue(np.isnan(first[1]))
                 self.assertTrue(np.isnan(second[1]))
             else:
-                self.assertAlmostEquals(first[1], second[1], 2)
+                self.assertAlmostEquals(first[1], second[1], 3)

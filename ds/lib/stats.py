@@ -46,6 +46,12 @@ class Stats:
         moods = []
         step = 1440//steps  # Step size in minutes
 
+        # Add one day with the same mood, so that we have
+        # the last day included in the charts too
+        last_point = avg_moods[-1]
+        new_point = (datetime.timedelta(days=1) + last_point[0], last_point[1])
+        avg_moods.append(new_point)
+
         for i in range(len(avg_moods)):  # pylint: disable=consider-using-enumerate
             current_point = avg_moods[i]
 
@@ -55,14 +61,7 @@ class Stats:
             try:
                 next_point = avg_moods[i + 1]
             except IndexError:
-                # Add last day as the date on midnight
-                next_time = datetime.time(hour=0, minute=0)
-                next_dt = current_point[0].combine(current_point[0], next_time)
-
-                dates.append(next_dt)
-                moods.append(current_point[1])
-
-                # break
+                break
 
             value_diff = next_point[1] - current_point[1]  # Mood difference between days
             time_diff = steps  # Time difference a.k.a. number of buckets
