@@ -26,7 +26,7 @@ class TestsDataLoader(TestCase):
 
         data = self.dl.avg_moods
 
-        self.assertEquals(len(data), 3)
+        self.assertEquals(len(data), 5)
 
     def test_average_moods(self):
         """
@@ -41,8 +41,8 @@ class TestsDataLoader(TestCase):
         self.assertEquals(first_day[0], datetime.datetime(2020, 5, 25))
         self.assertEquals(first_day[1], 2)
 
-        self.assertEquals(last_day[0], datetime.datetime(2020, 5, 28))
-        self.assertEquals(last_day[1], 4.6)
+        self.assertEquals(last_day[0], datetime.datetime(2020, 5, 30))
+        self.assertEquals(last_day[1], 5)
 
     def test_entries(self):
         """
