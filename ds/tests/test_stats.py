@@ -105,10 +105,10 @@ class TestStats(TestCase):
             (datetime.datetime(2020, 5, 30, 6, 0), 5.0),
             (datetime.datetime(2020, 5, 30, 12, 0), 5.0),
             (datetime.datetime(2020, 5, 30, 18, 0), 5.0),
+            (datetime.datetime(2020, 5, 31, 0, 0), 5.0),
         ]
 
         self.__assert_mood_data_equal(actual_data, expected_data)
-
 
     def __assert_mood_data_equal(self, data, expected_data):
         """
