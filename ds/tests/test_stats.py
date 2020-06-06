@@ -81,7 +81,6 @@ class TestStats(TestCase):
     def test_interpolate(self):
         # Use raw data
         data = self.stats._Stats__avg_moods
-
         dates, moods = self.stats.interpolate(data)
 
         actual_data = zip(dates, moods)
