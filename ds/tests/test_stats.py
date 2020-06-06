@@ -21,6 +21,7 @@ class TestStats(TestCase):
         self.dl = DataLoader(os.path.join(BASE_DIR, 'ds', 'tests', 'data', 'test_data.csv'))
         self.dl.load()
         self.stats = Stats(self.dl.avg_moods)
+        self.stats.interpolate_steps = 4
 
     def test_data_loaded(self):
         """

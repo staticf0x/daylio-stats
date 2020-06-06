@@ -15,7 +15,7 @@ class Stats:
 
     def __init__(self, avg_moods):
         self.__avg_moods = avg_moods
-        self.interpolate_steps = 12
+        self.interpolate_steps = 360  # Number of steps per day
 
     def split_into_bands(self, moods):
         split_data = dict.fromkeys(config.BOUNDARIES.keys())
@@ -50,7 +50,11 @@ class Stats:
         # the last day included in the charts too
         last_point = avg_moods[-1]
         new_point = (datetime.timedelta(days=1) + last_point[0], last_point[1])
-        avg_moods.append(new_point)
+
+        if isinstance(avg_moods, list):
+            avg_moods.append(new_point)
+        else:
+            np.append(avg_moods, new_point)
 
         for i in range(len(avg_moods)):  # pylint: disable=consider-using-enumerate
             current_point = avg_moods[i]
