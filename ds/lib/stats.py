@@ -213,3 +213,12 @@ class Stats:
                     dates.append(period)
 
         return dates
+
+    def mean(self):
+        """
+        Returns mean, std values for the whole dataset
+        """
+
+        avg_moods = np.array(self.__avg_moods)
+
+        return np.mean(avg_moods[:, 1]), np.std(avg_moods[:, 1])

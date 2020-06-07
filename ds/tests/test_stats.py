@@ -110,6 +110,16 @@ class TestStats(TestCase):
 
         self.__assert_mood_data_equal(actual_data, expected_data)
 
+    def test_avg(self):
+        """
+        Test mean and std values
+        """
+
+        mean, std = self.stats.mean()
+
+        self.assertAlmostEquals(mean, 4.18, 2)
+        self.assertAlmostEquals(std, 1.12, 2)
+
     def __assert_mood_data_equal(self, data, expected_data):
         """
         Compare two arrays of (datetime, avg_mood)

@@ -22,10 +22,12 @@ class Command(BaseCommand):
 
         avg_moods = np.array(loader.avg_moods)
 
-        print(f'Average mood: {np.mean(avg_moods[:, 1]):.2f} ± {np.std(avg_moods[:, 1]):.2f}')
-        print()
-
         stats = ds.lib.stats.Stats(loader.avg_moods)
+
+        mean, std = stats.mean()
+
+        print(f'Average mood: {mean:.2f} ± {std:.2f}')
+        print()
 
         print('Highs:')
         for period in stats.find_high_periods():
