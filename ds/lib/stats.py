@@ -4,8 +4,17 @@ A class to compute stats, interpolate data and so on.
 """
 
 import datetime
+from dataclasses import dataclass
 import numpy as np
 from ds.lib import config
+
+
+@dataclass
+class MoodPeriod:
+    start_date: datetime.datetime
+    end_date: datetime.datetime
+    duration: int
+    avg_mood: float
 
 
 class Stats:
@@ -112,3 +121,95 @@ class Stats:
         data[:, 1] = filtered_data
 
         return data
+
+    def find_high_periods(self, threshold=4, min_duration=4):
+        """
+        Find periods of elevated mood (hypomania, mania)
+
+        TODO: The threshold is highly individual
+        """
+
+        start_date = None
+        dates = []
+        moods = []
+
+        for date, mood in self.rolling_mean():
+            if not start_date and mood > threshold:
+                start_date = date
+                moods = []
+
+            moods.append(mood)
+
+            if start_date and mood <= threshold:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+                start_date = None
+                end_date = None
+                moods = []
+        else:
+            if start_date:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+        return dates
+
+    def find_low_periods(self, threshold=3, min_duration=5):
+        """
+        Find periods of low mood (depression)
+
+        TODO: The threshold is highly individual
+        """
+
+        start_date = None
+        dates = []
+        moods = []
+
+        for date, mood in self.rolling_mean():
+            if not start_date and mood < threshold:
+                start_date = date
+                moods = []
+
+            moods.append(mood)
+
+            if start_date and mood >= threshold:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+                start_date = None
+                end_date = None
+                moods = []
+        else:
+            if start_date:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+        return dates
