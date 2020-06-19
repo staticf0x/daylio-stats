@@ -32,9 +32,9 @@ jobs:
       run: |
         python manage.py test
       env:
-        # Just fill these so it works
         DS_SECRET_KEY: test
-        DS_DB_NAME: test
-        DS_DB_USER: test
-        DS_DB_HOST: test
-        DS_DB_PASSWORD: test
+    - name: Check PEP8
+      run: |
+        pycodestyle dayliostats/ ds/
+      env:
+        DS_SECRET_KEY: test
