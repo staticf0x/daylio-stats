@@ -94,7 +94,7 @@ class Stats:
                 # step*step_n == number of minutes in the current day
                 # just split it into hours and minutes for time object
                 hour = 0 if step_n == 0 else (step*step_n)//60
-                minute = 0 if step_n == 0 else (step*step_n)%60
+                minute = 0 if step_n == 0 else (step*step_n) % 60
 
                 next_time = datetime.time(hour=int(hour), minute=int(minute))
                 next_dt = current_point[0].combine(current_point[0], next_time)

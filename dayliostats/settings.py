@@ -138,4 +138,4 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ds', 'static'),
 )
 
-TEST_RUNNER="green.djangorunner.DjangoRunner"
+TEST_RUNNER = "green.djangorunner.DjangoRunner"
