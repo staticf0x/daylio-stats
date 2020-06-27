@@ -32,8 +32,8 @@ class Plot:
         count_plots = 1 + len(self.plots)
 
         _, axes = plt.subplots(count_plots,
-                                 1,
-                                 figsize=(12, 4*count_plots))
+                               1,
+                               figsize=(12, 4*count_plots))
 
         dates, masked_data = self.__plot_data(self.__avg_moods)
         plot_args = self.__plot_args(dates, masked_data)
