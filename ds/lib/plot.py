@@ -4,7 +4,6 @@ A class for plotting the data
 """
 
 import io
-import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 from ds.lib import config
@@ -32,7 +31,7 @@ class Plot:
 
         count_plots = 1 + len(self.plots)
 
-        fig, axes = plt.subplots(count_plots,
+        _, axes = plt.subplots(count_plots,
                                  1,
                                  figsize=(12, 4*count_plots))
 

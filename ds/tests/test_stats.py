@@ -13,6 +13,10 @@ from dayliostats.settings import BASE_DIR
 
 
 class TestStats(TestCase):
+    """
+    Tests for the Stats class
+    """
+
     def setUp(self):
         """
         Create the DataLoader
@@ -39,8 +43,8 @@ class TestStats(TestCase):
             (datetime.datetime(2020, 5, 30), 5.0),
         ]
 
-        self.assertEquals(len(data), 5)
-        self.assertEquals(data, expected_data)
+        self.assertEqual(len(data), 5)
+        self.assertEqual(data, expected_data)
 
     def test_rolling_mean_2(self):
         """
@@ -125,10 +129,10 @@ class TestStats(TestCase):
         Compare two arrays of (datetime, avg_mood)
         """
 
-        self.assertEquals(len(list(data)), len(list(expected_data)))
+        self.assertEqual(len(list(data)), len(list(expected_data)))
 
         for first, second in zip(data, expected_data):
-            self.assertEquals(first[0], second[0])
+            self.assertEqual(first[0], second[0])
 
             if np.isnan(first[1]):
                 self.assertTrue(np.isnan(first[1]))

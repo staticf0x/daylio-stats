@@ -11,6 +11,10 @@ from ds.lib import config
 
 @dataclass
 class MoodPeriod:
+    """
+    A class to represent a closed period of either good or bad mood
+    """
+
     start_date: datetime.datetime
     end_date: datetime.datetime
     duration: int
@@ -27,6 +31,11 @@ class Stats:
         self.interpolate_steps = 360  # Number of steps per day
 
     def split_into_bands(self, moods):
+        """
+        Splits moods into bands configured by ds.lib.config.BOUNDARIES,
+        as is used in Daylio.
+        """
+
         split_data = dict.fromkeys(config.BOUNDARIES.keys())
 
         for mood_name, boundaries in config.BOUNDARIES.items():
@@ -105,6 +114,11 @@ class Stats:
         return np.array(dates), np.array(moods)
 
     def rolling_mean(self, N=5):
+        """
+        Compute rolling mean for the average moods, where N is the
+        window size
+        """
+
         data = np.array(self.__avg_moods)
 
         # Compute the rolling mean for our data

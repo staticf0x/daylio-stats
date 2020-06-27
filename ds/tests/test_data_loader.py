@@ -11,6 +11,10 @@ from dayliostats.settings import BASE_DIR
 
 
 class TestsDataLoader(TestCase):
+    """
+    Tests for the DataLoader class
+    """
+
     def setUp(self):
         """
         Create the DataLoader
@@ -26,7 +30,7 @@ class TestsDataLoader(TestCase):
 
         data = self.dl.avg_moods
 
-        self.assertEquals(len(data), 5)
+        self.assertEqual(len(data), 5)
 
     def test_average_moods(self):
         """
@@ -38,11 +42,11 @@ class TestsDataLoader(TestCase):
         first_day = data[0]
         last_day = data[-1]
 
-        self.assertEquals(first_day[0], datetime.datetime(2020, 5, 25))
-        self.assertEquals(first_day[1], 2)
+        self.assertEqual(first_day[0], datetime.datetime(2020, 5, 25))
+        self.assertEqual(first_day[1], 2)
 
-        self.assertEquals(last_day[0], datetime.datetime(2020, 5, 30))
-        self.assertEquals(last_day[1], 5)
+        self.assertEqual(last_day[0], datetime.datetime(2020, 5, 30))
+        self.assertEqual(last_day[1], 5)
 
     def test_entries(self):
         """
@@ -53,19 +57,19 @@ class TestsDataLoader(TestCase):
 
         first_entry = entries[0]
 
-        self.assertEquals(first_entry.datetime, datetime.datetime(2020, 5, 25, 7, 9))
-        self.assertEquals(first_entry.mood, 3)
-        self.assertEquals(first_entry.mood_str, 'meh')
-        self.assertEquals(first_entry.activities, [])
-        self.assertEquals(first_entry.notes, '')
+        self.assertEqual(first_entry.datetime, datetime.datetime(2020, 5, 25, 7, 9))
+        self.assertEqual(first_entry.mood, 3)
+        self.assertEqual(first_entry.mood_str, 'meh')
+        self.assertEqual(first_entry.activities, [])
+        self.assertEqual(first_entry.notes, '')
 
         full_entry = entries[8]
 
-        self.assertEquals(full_entry.datetime, datetime.datetime(2020, 5, 27, 12, 20))
-        self.assertEquals(full_entry.mood, 4)
-        self.assertEquals(full_entry.mood_str, 'good')
-        self.assertEquals(full_entry.activities, ['work', 'good meal'])
-        self.assertEquals(full_entry.notes, 'Just good')
+        self.assertEqual(full_entry.datetime, datetime.datetime(2020, 5, 27, 12, 20))
+        self.assertEqual(full_entry.mood, 4)
+        self.assertEqual(full_entry.mood_str, 'good')
+        self.assertEqual(full_entry.activities, ['work', 'good meal'])
+        self.assertEqual(full_entry.notes, 'Just good')
 
     def test_both_hour_formats(self):
         """
@@ -77,5 +81,5 @@ class TestsDataLoader(TestCase):
         entry_12h = entries[0]
         entry_24h = entries[1]
 
-        self.assertEquals(entry_12h.datetime, datetime.datetime(2020, 5, 25, 7, 9))
-        self.assertEquals(entry_24h.datetime, datetime.datetime(2020, 5, 25, 14, 58))
+        self.assertEqual(entry_12h.datetime, datetime.datetime(2020, 5, 25, 7, 9))
+        self.assertEqual(entry_24h.datetime, datetime.datetime(2020, 5, 25, 14, 58))
