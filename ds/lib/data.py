@@ -119,3 +119,10 @@ class DataLoader:
         data.reverse()
 
         self.avg_moods = data
+
+    def get_raw_data(self):
+        """
+        Returns a dict of {date_str: [moods...]}
+        """
+
+        return self.__raw_data
