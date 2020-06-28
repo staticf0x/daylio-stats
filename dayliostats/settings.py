@@ -90,7 +90,7 @@ DATABASES = {
     }
 }
 
-if sys.argv[1] == 'test':
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
     DATABASES['default']['NAME'] = ':memory:'
 
