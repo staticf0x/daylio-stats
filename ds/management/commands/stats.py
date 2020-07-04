@@ -5,9 +5,11 @@ Look for high and low periods in the data
 """
 
 import datetime
-from django.core.management.base import BaseCommand
-import ds.lib
+
 import numpy as np
+from django.core.management.base import BaseCommand
+
+import ds.lib
 
 OUTPUT_FMT = '{} — {}, {:2d} days, avg: {:.2f}{}'
 

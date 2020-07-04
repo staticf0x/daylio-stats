@@ -3,11 +3,13 @@
 Test the DataLoader class
 """
 
-import os
 import datetime
+import os
+
 from django.test import TestCase
-from ds.lib.data import DataLoader
+
 from dayliostats.settings import BASE_DIR
+from ds.lib.data import DataLoader
 
 
 class TestsDataLoader(TestCase):

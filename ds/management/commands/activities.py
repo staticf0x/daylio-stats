@@ -4,9 +4,10 @@
 Show a list of activities from best to worst
 """
 
-from django.core.management.base import BaseCommand
-import ds.lib
 import numpy as np
+from django.core.management.base import BaseCommand
+
+import ds.lib
 
 
 class Command(BaseCommand):

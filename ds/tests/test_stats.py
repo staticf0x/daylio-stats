@@ -3,13 +3,15 @@
 Test the Stats class
 """
 
-import os
 import datetime
+import os
+
 import numpy as np
 from django.test import TestCase
+
+from dayliostats.settings import BASE_DIR
 from ds.lib.data import DataLoader
 from ds.lib.stats import Stats
-from dayliostats.settings import BASE_DIR
 
 
 class TestStats(TestCase):

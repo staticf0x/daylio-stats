@@ -4,8 +4,10 @@ A class for plotting the data
 """
 
 import io
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
+
 from ds.lib import config
 from ds.lib.stats import Stats
 

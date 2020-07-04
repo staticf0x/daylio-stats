@@ -5,7 +5,9 @@ A command to load the data and plot them manually
 """
 
 import time
+
 from django.core.management.base import BaseCommand
+
 import ds.lib
 
 

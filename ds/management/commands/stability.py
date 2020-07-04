@@ -6,9 +6,11 @@ Look at how much the mood changes over one day
 
 import datetime
 from collections import Counter
-from django.core.management.base import BaseCommand
-import ds.lib
+
 import numpy as np
+from django.core.management.base import BaseCommand
+
+import ds.lib
 
 
 def stability(x):

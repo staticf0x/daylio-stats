@@ -5,7 +5,9 @@ A class to compute stats, interpolate data and so on.
 
 import datetime
 from dataclasses import dataclass
+
 import numpy as np
+
 from ds.lib import config
 
 

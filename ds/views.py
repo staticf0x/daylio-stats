@@ -3,13 +3,15 @@
 Project views
 """
 
-import io
 import codecs
-import urllib
+import io
 import time
-from django.shortcuts import render, redirect
-from django.urls import reverse
+import urllib
+
 from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.urls import reverse
+
 import ds.lib
 
 
