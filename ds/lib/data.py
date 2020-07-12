@@ -122,9 +122,19 @@ class DataLoader:
 
         self.avg_moods = data
 
-    def get_raw_data(self):
+    def get_raw_data(self, year=None, month=None):
         """
         Returns a dict of {date_str: [moods...]}
+
+        TODO: Missing test
         """
 
-        return self.__raw_data
+        if not year and not month:
+            return self.__raw_data
+
+        filter_str = f'{year:4d}'
+
+        if month:
+            filter_str += f'-{month:02d}'
+
+        return {k: v for k, v in self.__raw_data.items() if k.startswith(filter_str)}
