@@ -112,7 +112,6 @@ class Stability:
         axes.set_title('Mood stability over time')
         axes.set_xlabel('Date')
         axes.set_ylabel('Mood stability (%)')
-        axes.set_yticks(np.arange(0, 101, 10))
         axes.grid()
 
         plt.tight_layout()
