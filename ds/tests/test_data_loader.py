@@ -12,7 +12,7 @@ from dayliostats.settings import BASE_DIR
 from ds.lib.data import DataLoader
 
 
-class TestsDataLoader(TestCase):
+class TestDataLoader(TestCase):
     """
     Tests for the DataLoader class
     """
