@@ -52,7 +52,8 @@ class Stability:
         mood_counts = Counter(count_by_date.values())
         mood_counts_list = [0, 0, 0, 0, 0]
 
-        # print('Mood count   Days   Days/Total days')
+        print(f'{year}-{month}')
+        print('Mood count   Days   Days/Total days')
 
         # TODO: We might use this information later,
         # how many percent of days had 1 mood, 2 moods, etc
@@ -60,7 +61,9 @@ class Stability:
             perc = count/total_days
             mood_counts_list[mood_count - 1] = count
 
-        #     print(f'{mood_count}            {count:4d}   {perc:6.2%}')
+            print(f'{mood_count}            {count:4d}   {perc:6.2%}')
+
+        print()
 
         # Calculate mood stability
         mood_stability = self.__stability_percent(mood_counts_list)
