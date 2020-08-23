@@ -34,7 +34,7 @@ class Stability:
 
     def stability_by_month(self, year, month):
         """
-        Returns a stability percentage for a given year/month
+        Returns a stability percentage [0, 1] for a given year/month
         """
 
         group_by_date = self.__loader.get_raw_data(year, month)
