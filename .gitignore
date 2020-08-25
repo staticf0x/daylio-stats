@@ -4,3 +4,4 @@ node_modules/
 staticfiles/
 daylio-plot-*
 db.sqlite3
+.env
