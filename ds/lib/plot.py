@@ -78,7 +78,15 @@ class Plot:
     def __plot_args(self, dates, masked_data):
         plot_args = []
 
+        # Quick dirty "optimization"
+        # TODO: Make this better
+        n = int(len(dates)//40e3)
+
+        dates = dates[::n]
+
         for mood_name, color in config.COLORS.items():
+            masked_data[mood_name] = masked_data[mood_name][::n]
+
             plot_args.append(dates)
             plot_args.append(masked_data[mood_name])
             plot_args.append(color)
