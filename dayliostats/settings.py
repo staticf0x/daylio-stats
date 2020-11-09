@@ -80,17 +80,17 @@ WSGI_APPLICATION = 'dayliostats.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DS_DB_NAME', 'dayliostats'),
-        'USER': os.environ.get('DS_DB_USER', 'dayliostats'),
-        'PASSWORD': os.environ.get('DS_DB_PASSWORD', ''),
-        'HOST': os.environ.get('DS_DB_HOST', 'localhost'),
-        'PORT': '',
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': os.environ.get('DS_DB_NAME', 'dayliostats'),
+    #     'USER': os.environ.get('DS_DB_USER', 'dayliostats'),
+    #     'PASSWORD': os.environ.get('DS_DB_PASSWORD', ''),
+    #     'HOST': os.environ.get('DS_DB_HOST', 'localhost'),
+    #     'PORT': '',
+    # }
 }
 
-if sys.argv[1] == 'test':
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
     DATABASES['default']['NAME'] = ':memory:'
 
@@ -138,4 +138,4 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'ds', 'static'),
 )
 
-TEST_RUNNER="green.djangorunner.DjangoRunner"
+TEST_RUNNER = "green.djangorunner.DjangoRunner"

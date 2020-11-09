@@ -40,6 +40,12 @@ For fish:
 $ set -x DS_SECRET_KEY (cat .ds_secret_key)
 ```
 
+Or just create `.env` file and put it in there:
+
+```
+DS_SECRET_KEY=...
+```
+
 ### Database password
 
 Same as with the secret key:

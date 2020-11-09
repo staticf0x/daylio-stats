@@ -4,9 +4,10 @@
 A command to load the data and plot them manually
 """
 
-import argparse
 import time
+
 from django.core.management.base import BaseCommand
+
 import ds.lib
 
 
@@ -27,7 +28,7 @@ class Command(BaseCommand):
         loader = ds.lib.data.DataLoader(kwargs['path'])
         loader.load()
 
-        plots = (5, 10, 20)
+        plots = (5, 10)
 
         print('Generating charts...')
         plot = ds.lib.plot.Plot(loader.avg_moods, plots)

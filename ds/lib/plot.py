@@ -4,9 +4,10 @@ A class for plotting the data
 """
 
 import io
-import datetime
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
+
 from ds.lib import config
 from ds.lib.stats import Stats
 
@@ -32,9 +33,9 @@ class Plot:
 
         count_plots = 1 + len(self.plots)
 
-        fig, axes = plt.subplots(count_plots,
-                                 1,
-                                 figsize=(12, 4*count_plots))
+        _, axes = plt.subplots(count_plots,
+                               1,
+                               figsize=(12, 4*count_plots))
 
         dates, masked_data = self.__plot_data(self.__avg_moods)
         plot_args = self.__plot_args(dates, masked_data)

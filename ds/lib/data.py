@@ -7,7 +7,9 @@ import csv
 import datetime
 from dataclasses import dataclass
 from typing import List
+
 import numpy as np
+
 from ds.lib import config
 
 
@@ -119,3 +121,20 @@ class DataLoader:
         data.reverse()
 
         self.avg_moods = data
+
+    def get_raw_data(self, year=None, month=None):
+        """
+        Returns a dict of {date_str: [moods...]}
+
+        TODO: Missing test
+        """
+
+        if not year and not month:
+            return self.__raw_data
+
+        filter_str = f'{year:4d}'
+
+        if month:
+            filter_str += f'-{month:02d}'
+
+        return {k: v for k, v in self.__raw_data.items() if k.startswith(filter_str)}

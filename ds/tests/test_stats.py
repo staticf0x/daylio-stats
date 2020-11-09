@@ -3,16 +3,22 @@
 Test the Stats class
 """
 
-import os
 import datetime
+import os
+
 import numpy as np
 from django.test import TestCase
+
+from dayliostats.settings import BASE_DIR
 from ds.lib.data import DataLoader
 from ds.lib.stats import Stats
-from dayliostats.settings import BASE_DIR
 
 
 class TestStats(TestCase):
+    """
+    Tests for the Stats class
+    """
+
     def setUp(self):
         """
         Create the DataLoader
@@ -39,8 +45,8 @@ class TestStats(TestCase):
             (datetime.datetime(2020, 5, 30), 5.0),
         ]
 
-        self.assertEquals(len(data), 5)
-        self.assertEquals(data, expected_data)
+        self.assertEqual(len(data), 5)
+        self.assertEqual(data, expected_data)
 
     def test_rolling_mean_2(self):
         """
@@ -110,15 +116,25 @@ class TestStats(TestCase):
 
         self.__assert_mood_data_equal(actual_data, expected_data)
 
+    def test_avg(self):
+        """
+        Test mean and std values
+        """
+
+        mean, std = self.stats.mean()
+
+        self.assertAlmostEquals(mean, 4.18, 2)
+        self.assertAlmostEquals(std, 1.12, 2)
+
     def __assert_mood_data_equal(self, data, expected_data):
         """
         Compare two arrays of (datetime, avg_mood)
         """
 
-        self.assertEquals(len(list(data)), len(list(expected_data)))
+        self.assertEqual(len(list(data)), len(list(expected_data)))
 
         for first, second in zip(data, expected_data):
-            self.assertEquals(first[0], second[0])
+            self.assertEqual(first[0], second[0])
 
             if np.isnan(first[1]):
                 self.assertTrue(np.isnan(first[1]))

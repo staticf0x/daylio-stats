@@ -4,8 +4,23 @@ A class to compute stats, interpolate data and so on.
 """
 
 import datetime
+from dataclasses import dataclass
+
 import numpy as np
+
 from ds.lib import config
+
+
+@dataclass
+class MoodPeriod:
+    """
+    A class to represent a closed period of either good or bad mood
+    """
+
+    start_date: datetime.datetime
+    end_date: datetime.datetime
+    duration: int
+    avg_mood: float
 
 
 class Stats:
@@ -18,6 +33,11 @@ class Stats:
         self.interpolate_steps = 360  # Number of steps per day
 
     def split_into_bands(self, moods):
+        """
+        Splits moods into bands configured by ds.lib.config.BOUNDARIES,
+        as is used in Daylio.
+        """
+
         split_data = dict.fromkeys(config.BOUNDARIES.keys())
 
         for mood_name, boundaries in config.BOUNDARIES.items():
@@ -85,7 +105,7 @@ class Stats:
                 # step*step_n == number of minutes in the current day
                 # just split it into hours and minutes for time object
                 hour = 0 if step_n == 0 else (step*step_n)//60
-                minute = 0 if step_n == 0 else (step*step_n)%60
+                minute = 0 if step_n == 0 else (step*step_n) % 60
 
                 next_time = datetime.time(hour=int(hour), minute=int(minute))
                 next_dt = current_point[0].combine(current_point[0], next_time)
@@ -96,6 +116,11 @@ class Stats:
         return np.array(dates), np.array(moods)
 
     def rolling_mean(self, N=5):
+        """
+        Compute rolling mean for the average moods, where N is the
+        window size
+        """
+
         data = np.array(self.__avg_moods)
 
         # Compute the rolling mean for our data
@@ -112,3 +137,104 @@ class Stats:
         data[:, 1] = filtered_data
 
         return data
+
+    def find_high_periods(self, threshold=4, min_duration=4):
+        """
+        Find periods of elevated mood (hypomania, mania)
+
+        TODO: The threshold is highly individual
+        """
+
+        start_date = None
+        dates = []
+        moods = []
+
+        for date, mood in self.rolling_mean():
+            if not start_date and mood > threshold:
+                start_date = date
+                moods = []
+
+            moods.append(mood)
+
+            if start_date and mood <= threshold:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+                start_date = None
+                end_date = None
+                moods = []
+        else:
+            if start_date:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+        return dates
+
+    def find_low_periods(self, threshold=3, min_duration=5):
+        """
+        Find periods of low mood (depression)
+
+        TODO: The threshold is highly individual
+        """
+
+        start_date = None
+        dates = []
+        moods = []
+
+        for date, mood in self.rolling_mean():
+            if not start_date and mood < threshold:
+                start_date = date
+                moods = []
+
+            moods.append(mood)
+
+            if start_date and mood >= threshold:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+                start_date = None
+                end_date = None
+                moods = []
+        else:
+            if start_date:
+                end_date = date
+
+                period = MoodPeriod(start_date,
+                                    end_date,
+                                    (end_date - start_date).days,
+                                    np.mean(moods))
+
+                if period.duration >= min_duration:
+                    dates.append(period)
+
+        return dates
+
+    def mean(self):
+        """
+        Returns mean, std values for the whole dataset
+        """
+
+        avg_moods = np.array(self.__avg_moods)
+
+        return np.mean(avg_moods[:, 1]), np.std(avg_moods[:, 1])
