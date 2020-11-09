@@ -99,3 +99,11 @@ Pipenv should install `green` as a dependency for running tests. If not, try
 ```
 $ pipenv install --dev
 ```
+
+## TODO
+
+- [ ] Plotting is too slow for larger exports
+- [ ] Move the lib code into a standalone package?
+- [ ] Support for more than 5 moods
+- [ ] Support custom color schemes
+- [ ] Plot only last year or so
