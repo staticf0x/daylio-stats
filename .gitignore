@@ -5,3 +5,4 @@ staticfiles/
 daylio-plot-*
 db.sqlite3
 .env
+__pycache__/
