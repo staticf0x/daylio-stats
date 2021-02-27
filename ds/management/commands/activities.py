@@ -7,7 +7,8 @@ Show a list of activities from best to worst
 import numpy as np
 from django.core.management.base import BaseCommand
 
-import ds.lib
+from daylio_parser.parser import Parser
+from daylio_parser.stats import activity_moods
 
 
 class Command(BaseCommand):
@@ -18,20 +19,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Load the data
-        loader = ds.lib.data.DataLoader(kwargs['path'])
-        loader.load()
-
-        activities_moods = {}
-
-        for entry in loader.entries:
-            for activity in entry.activities:
-                activities_moods.setdefault(activity, [])
-                activities_moods[activity].append(entry.mood)
-
-        activities_avg = {}
-
-        for activity, moods in activities_moods.items():
-            activities_avg[activity] = (np.mean(moods), np.std(moods))
+        parser = Parser()
+        entries = parser.load_csv(kwargs['path'])
+        activities_avg = activity_moods(entries)
 
         for activity, data in sorted(activities_avg.items(), key=lambda x: x[1][0], reverse=True):
             print(f'{activity:15s} {data[0]:.2f} ± {data[1]:.2f}')

@@ -9,6 +9,8 @@ import time
 from django.core.management.base import BaseCommand
 
 import ds.lib
+from daylio_parser.parser import Parser
+from daylio_parser.stats import average_moods
 
 
 class Command(BaseCommand):
@@ -25,11 +27,12 @@ class Command(BaseCommand):
         # TODO: Check that the path exists
         print('Loading data...')
 
-        loader = ds.lib.data.DataLoader(kwargs['path'])
-        loader.load()
+        parser = Parser()
+        entries = parser.load_csv(kwargs['path'])
+        avg_moods = average_moods(entries)
 
         plots = (5, 10)
 
         print('Generating charts...')
-        plot = ds.lib.plot.Plot(loader.avg_moods, plots)
+        plot = ds.lib.plot.Plot(avg_moods, plots)
         plot.plot_average_moods(kwargs['output'])

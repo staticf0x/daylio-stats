@@ -87,7 +87,7 @@ class Stats:
             except IndexError:
                 # Add last day as the date on midnight
                 next_time = datetime.time(hour=0, minute=0)
-                next_dt = current_point[0].combine(current_point[0], next_time)
+                next_dt = datetime.datetime.combine(current_point[0], next_time)
 
                 dates.append(next_dt)
                 moods.append(current_point[1])
@@ -108,7 +108,7 @@ class Stats:
                 minute = 0 if step_n == 0 else (step*step_n) % 60
 
                 next_time = datetime.time(hour=int(hour), minute=int(minute))
-                next_dt = current_point[0].combine(current_point[0], next_time)
+                next_dt = datetime.datetime.combine(current_point[0], next_time)
 
                 dates.append(next_dt)
                 moods.append(next_value)
