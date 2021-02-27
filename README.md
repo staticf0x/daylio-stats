@@ -107,3 +107,4 @@ $ pipenv install --dev
 - [ ] Support for more than 5 moods
 - [ ] Support custom color schemes
 - [ ] Plot only last year or so
+- [ ] Add a wordcloud generator
