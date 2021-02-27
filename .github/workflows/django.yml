@@ -34,9 +34,9 @@ jobs:
         DS_SECRET_KEY: test
     - name: Check PEP8
       run: |
-        pycodestyle dayliostats/ ds/
+        poetry run pycodestyle dayliostats/ ds/
       env:
         DS_SECRET_KEY: test
     - name: Check isort
       run: |
-        isort --check-only .
+        poetry run isort --check-only .
