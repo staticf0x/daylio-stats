@@ -4,6 +4,8 @@
 Show a list of activities from best to worst
 """
 
+import os
+
 import numpy as np
 from django.core.management.base import BaseCommand
 
@@ -18,6 +20,10 @@ class Command(BaseCommand):
         parser.add_argument('path', type=str, help='Path to the Daylio export')
 
     def handle(self, *args, **kwargs):
+        if not os.path.exists(kwargs['path']):
+            print(f'Path: {kwargs["path"]} doesn\'t exist')
+            return
+
         # Load the data
         parser = Parser()
         entries = parser.load_csv(kwargs['path'])

@@ -4,6 +4,7 @@
 Look for high and low periods in the data
 """
 
+import os
 import datetime
 
 import numpy as np
@@ -21,6 +22,10 @@ class Command(BaseCommand):
         parser.add_argument('path', type=str, help='Path to the Daylio export')
 
     def handle(self, *args, **kwargs):
+        if not os.path.exists(kwargs['path']):
+            print(f'Path: {kwargs["path"]} doesn\'t exist')
+            return
+
         # Load the data
         loader = ds.lib.data.DataLoader(kwargs['path'])
         loader.load()

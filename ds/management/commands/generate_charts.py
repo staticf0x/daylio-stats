@@ -4,6 +4,7 @@
 A command to load the data and plot them manually
 """
 
+import os
 import time
 
 from django.core.management.base import BaseCommand
@@ -24,7 +25,10 @@ class Command(BaseCommand):
                             help='Ouptut path for the plot')
 
     def handle(self, *args, **kwargs):
-        # TODO: Check that the path exists
+        if not os.path.exists(kwargs['path']):
+            print(f'Path: {kwargs["path"]} doesn\'t exist')
+            return
+
         print('Loading data...')
 
         parser = Parser()
