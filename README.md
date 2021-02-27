@@ -22,7 +22,7 @@ to get more charts than we're able to generate now on Heroku.
 After cloning the repo:
 
 - `$ npm install`
-- `$ pipenv install`
+- `$ poetry install`
 
 ### Secret key for Django
 
@@ -78,7 +78,7 @@ ADMIN = True
 For port 8000:
 
 ```
-$ pipenv shell
+$ poetry shell
 $ ./manage.py runserver 8000
 ```
 
@@ -92,12 +92,6 @@ $ gunicorn dayliostats.wsgi
 
 ```
 $ ./manage.py test
-```
-
-Pipenv should install `green` as a dependency for running tests. If not, try
-
-```
-$ pipenv install --dev
 ```
 
 ## TODO
