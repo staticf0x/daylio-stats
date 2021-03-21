@@ -22,6 +22,8 @@ class Command(BaseCommand):
             print(f'Path: {kwargs["path"]} doesn\'t exist')
             return
 
+        raise NotImplementedError
+
         # Load the data
         loader = ds.lib.data.DataLoader(kwargs['path'])
         loader.load()

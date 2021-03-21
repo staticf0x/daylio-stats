@@ -7,11 +7,11 @@ A command to load the data and plot them manually
 import os
 import time
 
+from daylio_parser.parser import Parser
+from daylio_parser.stats import average_moods
 from django.core.management.base import BaseCommand
 
 import ds.lib
-from daylio_parser.parser import Parser
-from daylio_parser.stats import average_moods
 
 
 class Command(BaseCommand):

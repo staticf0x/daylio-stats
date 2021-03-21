@@ -7,10 +7,9 @@ Show a list of activities from best to worst
 import os
 
 import numpy as np
-from django.core.management.base import BaseCommand
-
 from daylio_parser.parser import Parser
 from daylio_parser.stats import activity_moods
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):

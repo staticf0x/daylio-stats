@@ -4,8 +4,8 @@
 Look for high and low periods in the data
 """
 
-import os
 import datetime
+import os
 
 import numpy as np
 from django.core.management.base import BaseCommand
