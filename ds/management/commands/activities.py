@@ -30,5 +30,6 @@ class Command(BaseCommand):
         stats = Stats(entries)
         activities_avg = stats.activity_moods()
 
+        # TODO: Add coloring for different levels
         for activity, data in sorted(activities_avg.items(), key=lambda x: x[1][0], reverse=True):
             print(f'{activity:15s} {data[0]:.2f} ± {data[1]:.2f}')
