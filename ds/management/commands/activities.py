@@ -8,7 +8,7 @@ import os
 
 import numpy as np
 from daylio_parser.parser import Parser
-from daylio_parser.stats import activity_moods
+from daylio_parser.stats import Stats
 from django.core.management.base import BaseCommand
 
 
@@ -26,7 +26,9 @@ class Command(BaseCommand):
         # Load the data
         parser = Parser()
         entries = parser.load_csv(kwargs['path'])
-        activities_avg = activity_moods(entries)
+
+        stats = Stats(entries)
+        activities_avg = stats.activity_moods()
 
         for activity, data in sorted(activities_avg.items(), key=lambda x: x[1][0], reverse=True):
             print(f'{activity:15s} {data[0]:.2f} ± {data[1]:.2f}')
