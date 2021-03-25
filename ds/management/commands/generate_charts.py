@@ -8,7 +8,7 @@ import os
 import time
 
 from daylio_parser.parser import Parser
-from daylio_parser.stats import average_moods
+from daylio_parser.stats import Stats
 from django.core.management.base import BaseCommand
 
 import ds.lib
@@ -33,7 +33,9 @@ class Command(BaseCommand):
 
         parser = Parser()
         entries = parser.load_csv(kwargs['path'])
-        avg_moods = average_moods(entries)
+
+        stats = Stats(entries)
+        avg_moods = stats.average_moods()
 
         plots = (5, 10)
 
