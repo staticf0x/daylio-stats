@@ -28,7 +28,7 @@ DEBUG = False
 # This enabled the django admin console
 ADMIN = False
 
-ALLOWED_HOSTS = ['daylio-stats.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['daylio-stats.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'ds',
 ]
 
