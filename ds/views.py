@@ -8,11 +8,10 @@ import io
 import time
 import urllib
 
+from daylio_parser.parser import Parser
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-
-from daylio_parser.parser import Parser
 
 import ds.lib
 

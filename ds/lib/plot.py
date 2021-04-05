@@ -8,11 +8,10 @@ from typing import List
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-from daylio_parser.parser import Entry
-from daylio_parser.stats import Stats
 from daylio_parser.config import MoodConfig
+from daylio_parser.parser import Entry
 from daylio_parser.plot import PlotData
+from daylio_parser.stats import Stats
 
 
 class Plot:

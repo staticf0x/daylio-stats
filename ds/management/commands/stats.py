@@ -8,10 +8,9 @@ import datetime
 import os
 
 import numpy as np
-from django.core.management.base import BaseCommand
-
 from daylio_parser.parser import Parser
 from daylio_parser.stats import Stats
+from django.core.management.base import BaseCommand
 
 OUTPUT_FMT = '{} — {}, {:2d} days, avg: {:.2f}{}'
 
