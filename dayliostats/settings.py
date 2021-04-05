@@ -13,8 +13,12 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import sys
 
+import dotenv
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+dotenv.read_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -28,7 +32,7 @@ DEBUG = False
 # This enabled the django admin console
 ADMIN = False
 
-ALLOWED_HOSTS = ['daylio-stats.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['daylio-stats.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'ds',
 ]
 

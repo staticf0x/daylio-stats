@@ -4,10 +4,12 @@
 Show a list of activities from best to worst
 """
 
-import numpy as np
-from django.core.management.base import BaseCommand
+import os
 
-import ds.lib
+import numpy as np
+from daylio_parser.parser import Parser
+from daylio_parser.stats import Stats
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -17,21 +19,17 @@ class Command(BaseCommand):
         parser.add_argument('path', type=str, help='Path to the Daylio export')
 
     def handle(self, *args, **kwargs):
+        if not os.path.exists(kwargs['path']):
+            print(f'Path: {kwargs["path"]} doesn\'t exist')
+            return
+
         # Load the data
-        loader = ds.lib.data.DataLoader(kwargs['path'])
-        loader.load()
+        parser = Parser()
+        entries = parser.load_csv(kwargs['path'])
 
-        activities_moods = {}
+        stats = Stats(entries)
+        activities_avg = stats.activity_moods()
 
-        for entry in loader.entries:
-            for activity in entry.activities:
-                activities_moods.setdefault(activity, [])
-                activities_moods[activity].append(entry.mood)
-
-        activities_avg = {}
-
-        for activity, moods in activities_moods.items():
-            activities_avg[activity] = (np.mean(moods), np.std(moods))
-
+        # TODO: Add coloring for different levels
         for activity, data in sorted(activities_avg.items(), key=lambda x: x[1][0], reverse=True):
             print(f'{activity:15s} {data[0]:.2f} ± {data[1]:.2f}')

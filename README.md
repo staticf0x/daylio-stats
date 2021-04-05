@@ -21,8 +21,8 @@ to get more charts than we're able to generate now on Heroku.
 
 After cloning the repo:
 
-- `$ npm install`
-- `$ pipenv install`
+- `$ npm install` (this is only for development currently)
+- `$ poetry install`
 
 ### Secret key for Django
 
@@ -78,7 +78,7 @@ ADMIN = True
 For port 8000:
 
 ```
-$ pipenv shell
+$ poetry shell
 $ ./manage.py runserver 8000
 ```
 
@@ -88,22 +88,14 @@ $ ./manage.py runserver 8000
 $ gunicorn dayliostats.wsgi
 ```
 
+### Or use Docker
+
+```
+$ docker run --rm -e DS_SECRET_KEY="<secret key>" -p 8000:8000 daylio-stats
+```
+
 ## Running tests
 
 ```
 $ ./manage.py test
 ```
-
-Pipenv should install `green` as a dependency for running tests. If not, try
-
-```
-$ pipenv install --dev
-```
-
-## TODO
-
-- [ ] Plotting is too slow for larger exports
-- [ ] Move the lib code into a standalone package?
-- [ ] Support for more than 5 moods
-- [ ] Support custom color schemes
-- [ ] Plot only last year or so

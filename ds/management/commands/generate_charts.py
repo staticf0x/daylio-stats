@@ -4,8 +4,11 @@
 A command to load the data and plot them manually
 """
 
+import os
 import time
 
+from daylio_parser.parser import Parser
+from daylio_parser.stats import Stats
 from django.core.management.base import BaseCommand
 
 import ds.lib
@@ -22,14 +25,18 @@ class Command(BaseCommand):
                             help='Ouptut path for the plot')
 
     def handle(self, *args, **kwargs):
-        # TODO: Check that the path exists
+        if not os.path.exists(kwargs['path']):
+            print(f'Path: {kwargs["path"]} doesn\'t exist')
+            return
+
         print('Loading data...')
 
-        loader = ds.lib.data.DataLoader(kwargs['path'])
-        loader.load()
+        parser = Parser()
+        entries = parser.load_csv(kwargs['path'])
 
+        stats = Stats(entries)
         plots = (5, 10)
 
         print('Generating charts...')
-        plot = ds.lib.plot.Plot(loader.avg_moods, plots)
+        plot = ds.lib.plot.Plot(entries, plots)
         plot.plot_average_moods(kwargs['output'])

@@ -5,11 +5,12 @@ Look for high and low periods in the data
 """
 
 import datetime
+import os
 
 import numpy as np
+from daylio_parser.parser import Parser
+from daylio_parser.stats import Stats
 from django.core.management.base import BaseCommand
-
-import ds.lib
 
 OUTPUT_FMT = '{} — {}, {:2d} days, avg: {:.2f}{}'
 
@@ -21,20 +22,22 @@ class Command(BaseCommand):
         parser.add_argument('path', type=str, help='Path to the Daylio export')
 
     def handle(self, *args, **kwargs):
+        if not os.path.exists(kwargs['path']):
+            print(f'Path: {kwargs["path"]} doesn\'t exist')
+            return
+
         # Load the data
-        loader = ds.lib.data.DataLoader(kwargs['path'])
-        loader.load()
+        parser = Parser()
+        entries = parser.load_csv(kwargs['path'])
 
-        avg_moods = np.array(loader.avg_moods)
-
-        stats = ds.lib.stats.Stats(loader.avg_moods)
+        stats = Stats(entries)
 
         mean, std = stats.mean()
 
         print(f'Average mood: {mean:.2f} ± {std:.2f}')
         print()
 
-        today = datetime.datetime.now()
+        today = datetime.datetime.now().date()
 
         print('Highs:')
         for period in stats.find_high_periods():

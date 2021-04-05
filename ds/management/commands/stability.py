@@ -4,9 +4,9 @@
 Look at how much the mood changes over one day
 """
 
-from django.core.management.base import BaseCommand
+import os
 
-import ds.lib
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -16,9 +16,8 @@ class Command(BaseCommand):
         parser.add_argument('path', type=str, help='Path to the Daylio export')
 
     def handle(self, *args, **kwargs):
-        # Load the data
-        loader = ds.lib.data.DataLoader(kwargs['path'])
-        loader.load()
+        if not os.path.exists(kwargs['path']):
+            print(f'Path: {kwargs["path"]} doesn\'t exist')
+            return
 
-        stability = ds.lib.stability.Stability(loader)
-        stability.stability_plot()
+        raise NotImplementedError
