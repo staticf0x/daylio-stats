@@ -8,8 +8,6 @@ import os
 
 from django.core.management.base import BaseCommand
 
-import ds.lib
-
 
 class Command(BaseCommand):
     help = 'Generate additional stats'
@@ -23,10 +21,3 @@ class Command(BaseCommand):
             return
 
         raise NotImplementedError
-
-        # Load the data
-        loader = ds.lib.data.DataLoader(kwargs['path'])
-        loader.load()
-
-        stability = ds.lib.stability.Stability(loader)
-        stability.stability_plot()
