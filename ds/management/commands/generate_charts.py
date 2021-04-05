@@ -35,10 +35,8 @@ class Command(BaseCommand):
         entries = parser.load_csv(kwargs['path'])
 
         stats = Stats(entries)
-        avg_moods = stats.average_moods()
-
         plots = (5, 10)
 
         print('Generating charts...')
-        plot = ds.lib.plot.Plot(avg_moods, plots)
+        plot = ds.lib.plot.Plot(entries, plots)
         plot.plot_average_moods(kwargs['output'])

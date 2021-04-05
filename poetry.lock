@@ -53,6 +53,17 @@ python-versions = "*"
 six = "*"
 
 [[package]]
+name = "daylio-parser"
+version = "0.2.0"
+description = "A Python module to parse Daylio exports"
+category = "main"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+numpy = ">=1.20.1,<2.0.0"
+
+[[package]]
 name = "django"
 version = "3.1.7"
 description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
@@ -319,7 +330,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "48b397f50c926df8beb019444e5e129b84681a0674b0f6628a5375db70d595cf"
+content-hash = "21c4bb7a8db16123a308d388bad2414b3706a21f902b2b5683e1b2f0d7239295"
 
 [metadata.files]
 asgiref = [
@@ -391,6 +402,10 @@ coverage = [
 cycler = [
     {file = "cycler-0.10.0-py2.py3-none-any.whl", hash = "sha256:1d8a5ae1ff6c5cf9b93e8811e581232ad8920aeec647c37316ceac982b08cb2d"},
     {file = "cycler-0.10.0.tar.gz", hash = "sha256:cd7b2d1018258d7247a71425e9f26463dfb444d411c39569972f4ce586b0c9d8"},
+]
+daylio-parser = [
+    {file = "daylio-parser-0.2.0.tar.gz", hash = "sha256:a01cbae88509b4adb6aca2fb421e8c134a5c8f12dedd78cf27e7ec520b219073"},
+    {file = "daylio_parser-0.2.0-py3-none-any.whl", hash = "sha256:8be0275619317f53d2bb407fa169143c257b115d93f9b0fe82e7177cae11dc2a"},
 ]
 django = [
     {file = "Django-3.1.7-py3-none-any.whl", hash = "sha256:baf099db36ad31f970775d0be5587cc58a6256a6771a44eb795b554d45f211b8"},

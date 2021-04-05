@@ -12,6 +12,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+from daylio_parser.parser import Parser
+
 import ds.lib
 
 
@@ -63,12 +65,12 @@ def process(request):
     wrapped_file = stream_reader(buf)
 
     # Load the CSV
-    loader = ds.lib.data.DataLoader(wrapped_file)
-    loader.load()
+    parser = Parser()
+    entries = parser.load_from_buffer(wrapped_file)
     buf.close()
 
     # Create the charts and save them into a buffer
-    plot = ds.lib.plot.Plot(loader.avg_moods)
+    plot = ds.lib.plot.Plot(entries)
     buf = plot.plot_average_moods()
 
     # Send the buffer as an attachment to the client

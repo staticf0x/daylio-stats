@@ -3,4 +3,4 @@
 Lib for the project
 """
 
-from . import config, data, plot, stability, stats
+from . import plot
