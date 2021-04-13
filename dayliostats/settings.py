@@ -86,6 +86,12 @@ WSGI_APPLICATION = 'dayliostats.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DS_DB_NAME', 'dayliostats'),
+        'USER': os.getenv('DS_DB_USER', 'dayliostats'),
+        'PASSWORD': os.getenv('DS_DB_PASSWORD', 'dayliostats'),
+        'HOST': os.getenv('DS_DB_HOST', 'localhost'),
+        'PORT': 3306,
     }
 }
 
