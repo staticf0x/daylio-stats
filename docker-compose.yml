@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+    db:
+        image: mariadb
+        restart: always
+        volumes:
+            # - ./data/init:/docker-entrypoint-initdb.d
+            - ./data/db:/var/lib/mysql
+        env_file:
+            - .env
+        ports:
+            - 3306:3306
+        healthcheck:
+            test: "/usr/bin/mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --execute \"SHOW DATABASES;\""
+            interval: 3s
+            timeout: 1s
+            retries: 5
+
+    daylio-stats:
+        build: .
+        command: gunicorn -b 0.0.0.0:8000 dayliostats.wsgi
+        volumes:
+            - .:/usr/src/app
+        ports:
+            - 8000:8000
+        env_file:
+            - .env
+        depends_on:
+            db:
+                condition: service_healthy
