@@ -39,4 +39,4 @@ jobs:
         DS_SECRET_KEY: test
     - name: Check isort
       run: |
-        poetry run isort --check-only .
+        poetry run isort --check-only . --skip=ds/migrations/ --skip=node_modules/
