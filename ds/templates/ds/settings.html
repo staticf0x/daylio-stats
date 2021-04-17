@@ -1,0 +1,36 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+<h1 class="title">Settings</h1>
+
+{% if form.non_field_errors %}
+<div class="notification is-danger">
+    {% for error in form.non_field_errors %}
+    {{ error }}<br>
+    {% endfor %}
+</div>
+{% endif %}
+
+<form action="{% url 'ds:settings' %}" method="post">
+    <div class="field">
+        <div class="control">
+            <label class="checkbox">
+                <input name="save_notes" type="checkbox"{% if form.save_notes.value %} checked{% endif %}>
+                Save notes when uploading CSVs
+            </label>
+        </div>
+        <p class="help">
+            Whenever you're uploading a CSV with your entries, you can choose
+            whether you want your text notes saved in the database or not.
+            Some tools use these notes, but you can opt out if you
+            are concerned about your privacy.
+        </p>
+    </div>
+    <div class="field">
+        <div class="control">
+            <button class="button is-success">Save</button>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
+{% endblock content %}

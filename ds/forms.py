@@ -5,6 +5,7 @@ Forms
 
 from django import forms
 from django.contrib.auth import authenticate
+from ds.models import UserSettings
 
 
 class LoginForm(forms.Form):
@@ -21,3 +22,9 @@ class LoginForm(forms.Form):
 
         if not user:
             raise forms.ValidationError('Username or password incorrect')
+
+
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model = UserSettings
+        fields = ['save_notes',]

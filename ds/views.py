@@ -10,12 +10,14 @@ import urllib
 
 from daylio_parser.parser import Parser
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
 import ds.forms
 import ds.lib
+from ds import models
 
 
 def index(request):
@@ -109,3 +111,21 @@ def logout_view(request):
     logout(request)
 
     return redirect('ds:index')
+
+
+@login_required(login_url='/login/')
+def settings(request):
+    cont = {}
+
+    settings = models.UserSettings.objects.get(user=request.user)
+    settings_form = ds.forms.SettingsForm(request.POST or None, instance=settings)
+
+    if request.method == 'POST':
+        if settings_form.is_valid():
+            settings_form.save()
+
+            return redirect('ds:settings')
+
+    cont['form'] = settings_form
+
+    return render(request, 'ds/settings.html', cont)
