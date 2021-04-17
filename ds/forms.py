@@ -27,4 +27,4 @@ class LoginForm(forms.Form):
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = UserSettings
-        fields = ['save_notes',]
+        fields = ['save_notes', ]
