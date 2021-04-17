@@ -1,0 +1,58 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-half is-offset-one-quarter">
+        <h1 class="title">Login</h1>
+
+        {% if form.non_field_errors %}
+        <div class="notification is-danger">
+            {% for error in form.non_field_errors %}
+            {{ error }}<br>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="{% url 'ds:login' %}" method="post">
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input name="username" type="text" class="input" placeholder="Username" autofocus>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </p>
+
+                {% if form.username.errors %}
+                <p class="help is-danger">
+                {% for error in form.username.errors %}
+                {{ error }}<br>
+                {% endfor %}
+                </p>
+                {% endif %}
+            </div>
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input name="password" type="password" class="input" placeholder="Password">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                </p>
+
+                {% if form.password.errors %}
+                <p class="help is-danger">
+                {% for error in form.password.errors %}
+                {{ error }}<br>
+                {% endfor %}
+                </p>
+                {% endif %}
+            </div>
+            <div class="field">
+                <p class="control">
+                    <button class="button is-success">Login</button>
+                </p>
+            </div>
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+{% endblock content %}

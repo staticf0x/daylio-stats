@@ -9,10 +9,12 @@ import time
 import urllib
 
 from daylio_parser.parser import Parser
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
+import ds.forms
 import ds.lib
 
 
@@ -79,3 +81,31 @@ def process(request):
     response['Content-Disposition'] = f'attachment; filename={output_name}'
 
     return response
+
+
+def login_view(request):
+    cont = {}
+
+    if request.method == 'POST':
+        login_form = ds.forms.LoginForm(request.POST)
+
+        if login_form.is_valid():
+            # User can log in
+            user = authenticate(
+                username=request.POST.get('username'),
+                password=request.POST.get('password')
+            )
+
+            login(request, user)
+
+            return redirect('ds:index')
+
+        cont['form'] = login_form
+
+    return render(request, 'ds/login.html', cont)
+
+
+def logout_view(request):
+    logout(request)
+
+    return redirect('ds:index')
