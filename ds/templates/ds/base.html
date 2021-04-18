@@ -20,7 +20,7 @@
 <body>
     <nav class="navbar" aria-label="main navigation">
         <div class="navbar-brand">
-            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -60,7 +60,7 @@
                 {% if user.is_authenticated %}
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        {{ user.username }}
+                        <i class="fas fa-user profile-icon"></i> {{ user.username }}
                     </a>
 
                     <div class="navbar-dropdown">
