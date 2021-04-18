@@ -1,3 +1,7 @@
+"""
+Admin model registration
+"""
+
 from django.contrib import admin
 
 from ds import models

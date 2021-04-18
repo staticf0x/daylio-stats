@@ -23,6 +23,7 @@ pylint = "^2.7.1"
 green = "^3.2.5"
 pycodestyle = "^2.6.0"
 isort = "^5.7.0"
+pydocstyle = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

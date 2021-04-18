@@ -11,6 +11,7 @@ app_name = 'ds'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('about/', views.about, name='about'),
     path('process/', views.process, name='process'),
     path('settings/', views.settings, name='settings'),

@@ -30,6 +30,16 @@ def index(request):
     return render(request, 'ds/index.html', cont)
 
 
+def dashboard(request):
+    """
+    Dashboard
+    """
+
+    cont = {}
+
+    return render(request, 'ds/dashboard.html', cont)
+
+
 def about(request):
     """
     About page with info about the project
