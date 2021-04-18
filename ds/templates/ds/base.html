@@ -38,7 +38,9 @@
                         Get your charts
                     </span>
                 </a>
+            </div>
 
+            <div class="navbar-end">
                 <a href="{% url 'ds:about' %}" class="navbar-item">
                     <span class="icon">
                         <i class="fas fa-info"></i>
@@ -47,16 +49,6 @@
                     <span>About</span>
                 </a>
 
-                <a href="{% url 'ds:contributing' %}" class="navbar-item">
-                    <span class="icon">
-                        <i class="fas fa-hands-helping"></i>
-                    </span>
-
-                    <span>Contributing</span>
-                </a>
-            </div>
-
-            <div class="navbar-end">
                 {% if user.is_authenticated %}
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">

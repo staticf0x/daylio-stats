@@ -12,7 +12,6 @@ app_name = 'ds'
 urlpatterns = [
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
-    path('contributing/', views.contributing, name='contributing'),
     path('process/', views.process, name='process'),
     path('settings/', views.settings, name='settings'),
     path('login/', views.login_view, name='login'),

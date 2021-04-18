@@ -38,14 +38,6 @@ def about(request):
     return render(request, 'ds/about.html', {})
 
 
-def contributing(request):
-    """
-    Info about contributing to the project
-    """
-
-    return render(request, 'ds/contributing.html', {})
-
-
 def process(request):
     """
     Process the input file and redirect to result page

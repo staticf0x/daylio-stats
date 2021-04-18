@@ -19,56 +19,75 @@
 <h2 class="title">Privacy policy</h2>
 
 <div class="content">
+    <h3 class="subtitle">Using the anonymous upload</h3>
+
+    <p>
+        This website has been created with privacy in mind, and therefore
+        you can use the <a href="{% url 'ds:index' %}">anonymous upload</a>,
+        in which case:
+    </p>
+
     <ul>
         <li>
-            This website <span class="has-text-weight-bold">does not</span> use cookies, trackers, ads or anything.
+            <i class="fas fa-fw fa-cookie"></i> This website <span class="has-text-weight-bold">does not</span> use cookies, trackers, ads or anything.
         </li>
         <li>
+            <i class="fas fa-fw fa-file-upload"></i>
             Your uploaded files are <span class="has-text-weight-bold">never</span> stored on the server. Once they're uploaded, they're immediately processed and discarded.
         </li>
     </ul>
 
     <p>
-        If you want to make sure, you can see the source code for youself, see <a href="{% url 'ds:contributing' %}">Contributing</a>.
+        If you want to make sure, you can see the source code on <a href="https://github.com/meesha7/daylio-stats" target="_blank"><i class="fab fa-github"></i> GitHub</a>.
     </p>
-</div>
 
-<h2 class="title">Future features</h2>
+    <h3 class="subtitle">Using an account</h3>
 
-<div class="content">
     <p>
-        This is a pet project and there's a lot of ideas that I already thought about, including:
+        Using the site with an account comes with a few additional conditions:
     </p>
 
     <ul>
         <li>
-            <i class="fas fa-fw fa-wave-square"></i>
-            Try to detect periods of good/bad moods <span class="has-text-grey is-size-7">(I mean obviously you can see it with your own eyes, but come on, I'm hypomanic and want to do stuff)</span>
+            <i class="fas fa-fw fa-cookie"></i> Only <span class="has-text-weight-bold">essential</span> cookies are used: those for keeping you logged in.
+            No other type of cookies is used: no trackers, no ads, no analytics.
         </li>
         <li>
-            <i class="fas fa-fw fa-chart-line"></i>
-            Try to detect rapid mood changes (read above note lol)
+            <i class="fas fa-fw fa-file-upload"></i>
+            The files you upload will be processed and discarded, however
+            the data they contain will be saved in a database. Only the data
+            you provide is stored. You can also choose which parts of the
+            uploaded file are stored.
         </li>
         <li>
-            <i class="fas fa-fw fa-cloud"></i>
-            Make a word cloud from notes and add relations to moods (in other words: what you most often mention in your entries)
+            <i class="fas fa-fw fa-lock"></i> Your passwords are stored in a way that nobody can read them.
+            Not even with a database access.
         </li>
         <li>
-            <i class="fas fa-fw fa-palette"></i>
-            Support custom colors/themes
+            <i class="fas fa-fw fa-trash"></i> You can delete your data anytime.
+            The data will be deleted immediately, with no way of restoring them.
         </li>
         <li>
-            <i class="fas fa-fw fa-smile-beam"></i>
-            Support for more than 5 moods
+            <i class="fas fa-fw fa-bell"></i> Reminder, that this is still a hobby project.
         </li>
-        <li>
-            <i class="fas fa-fw fa-save"></i>
-            Option to save the (future) config (via a generated URL or something)
-        </li>
-        <li>
-            <i class="fas fa-fw fa-balance-scale"></i>
-            Count good/bad days in each month (and ratio)
-        </li>
+    </ul>
+</div>
+
+<h2 class="title">Contributing</h2>
+
+<div class="content">
+    <p>
+        This project is open source! The source code is located on <a href="https://github.com/meesha7/daylio-stats" target="_blank"><i class="fab fa-github"></i> GitHub</a>.
+    </p>
+
+    <p>
+        Help is always appreciated. You can contribute in the following ways:
+    </p>
+
+    <ul>
+        <li>Report bugs, submit new ideas or ask questions on the <a href="https://github.com/meesha7/daylio-stats/issues">Issues page</a> on GitHub</li>
+        <li>If someone has at least a better sense for design than me, please, hit me up</li>
+        <li>For developers: PRs are welcome!</li>
     </ul>
 </div>
 
