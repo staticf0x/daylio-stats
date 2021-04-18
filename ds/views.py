@@ -40,6 +40,40 @@ def dashboard(request):
     return render(request, 'ds/dashboard.html', cont)
 
 
+@login_required(login_url='/login/')
+def upload(request):
+    cont = {}
+
+    if request.method == 'POST':
+        if not request.FILES.get('csv', None):
+            params = {'err': 'no-input-file'}
+            return redirect('{}?{}'.format(reverse('ds:upload'), urllib.parse.urlencode(params)))
+
+        # Write the uploaded file into a buffer
+        buf = io.BytesIO()
+
+        for chunk in request.FILES['csv'].chunks():
+            buf.write(chunk)
+
+        buf.seek(0)
+
+        # Convert to StringIO so the CSV reader can iterate over strings and not bytes
+        stream_reader = codecs.getreader('utf-8')
+        wrapped_file = stream_reader(buf)
+
+        # Load the CSV
+        parser = Parser()
+        entries = parser.load_from_buffer(wrapped_file)
+        buf.close()
+
+        for entry in entries:
+            pass
+
+        return redirect('ds:dashboard')
+
+    return render(request, 'ds/upload.html', cont)
+
+
 def about(request):
     """
     About page with info about the project

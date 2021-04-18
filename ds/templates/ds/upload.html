@@ -1,0 +1,44 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+<h1 class="title">Upload CSV</h1>
+
+<article class="message is-info">
+    <div class="message-body">
+        Uploading a CSV file will overwrite your existing data. If you want to keep
+        separate imports, use different accounts.
+    </div>
+</article>
+
+{% if ERR %}
+<div class="notification is-danger">
+    {{ ERR }}
+</div>
+{% endif %}
+
+<article class="message is-success">
+    <div class="message-header">
+        <p>Upload a CSV file</p>
+    </div>
+    <div class="message-body">
+        <form action="{% url 'ds:upload' %}" method="post" enctype="multipart/form-data">
+            <!-- TODO: Make it pretty with bulma -->
+            <div class="field">
+                <label for="csv" class="label">Your CSV file:</label>
+
+                <div class="control">
+                    <input id="csv" type="file" name="csv">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <button class="button is-primary" type="submit">Submit</button>
+                </div>
+            </div>
+
+            {% csrf_token %}
+        </form>
+    </div>
+</article>
+{% endblock content %}
