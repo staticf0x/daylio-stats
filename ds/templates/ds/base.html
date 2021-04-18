@@ -39,6 +39,15 @@
                         Dashboard
                     </span>
                 </a>
+                <a href="{% url 'ds:upload' %}" class="navbar-item">
+                    <span class="icon">
+                        <i class="fas fa-file-upload"></i>
+                    </span>
+
+                    <span>
+                        Upload CSV
+                    </span>
+                </a>
                 {% else %}
                 <a class="navbar-item has-text-danger" href="{% url 'ds:index' %}">
                     <span class="icon">
