@@ -14,6 +14,20 @@ class UserSettings(models.Model):
         return f'UserSettings ({self.id}, {self.user})'
 
 
+class EntryActivities(models.Model):
+    """
+    Custom join model for Activity and Entry.
+    This is needed for quick operations on user's data (bulk delete).
+    """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activity = models.ForeignKey('Activity', on_delete=models.CASCADE)
+    entry = models.ForeignKey('Entry', on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'ds_entry_activities'
+
+
 class Activity(models.Model):
     """
     Activity for an Entry for a User.
@@ -23,6 +37,9 @@ class Activity(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=64)
+
+    class Meta:
+        unique_together = ('user', 'name')
 
     def __str__(self):
         return f'Activity ({self.id}, {self.user}): {self.name}'
@@ -35,7 +52,7 @@ class Entry(models.Model):
     datetime = models.DateTimeField()
     mood_name = models.CharField(max_length=64)
     mood = models.IntegerField()
-    activities = models.ManyToManyField(Activity)
+    activities = models.ManyToManyField(Activity, through=EntryActivities)
     notes = models.TextField()
 
     def __str__(self):
