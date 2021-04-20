@@ -16,6 +16,7 @@ django-dotenv = "^1.4.2"
 django-extensions = "^3.1.1"
 daylio-parser = "0.2.0"
 mysqlclient = "^2.0.3"
+django-debug-toolbar = "^3.2.1"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.13.9"
