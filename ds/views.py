@@ -3,8 +3,6 @@
 Project views
 """
 
-import codecs
-import io
 import time
 import urllib
 
@@ -14,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.db import transaction
 
 import ds.forms
 import ds.lib
@@ -31,12 +28,19 @@ def index(request):
     return render(request, 'ds/index.html', cont)
 
 
+@login_required(login_url='/login/')
 def dashboard(request):
     """
     Dashboard
     """
 
     cont = {}
+
+    entries = models.Entry.objects.filter(user=request.user).order_by('datetime')
+
+    cont['count'] = entries.count()
+    cont['first'] = entries[0]
+    cont['last'] = entries[entries.count() - 1]
 
     return render(request, 'ds/dashboard.html', cont)
 
@@ -50,52 +54,10 @@ def upload(request):
             params = {'err': 'no-input-file'}
             return redirect('{}?{}'.format(reverse('ds:upload'), urllib.parse.urlencode(params)))
 
-        # Write the uploaded file into a buffer
-        buf = io.BytesIO()
+        entries = ds.lib.data.get_entries_from_upload(request.FILES['csv'])
 
-        for chunk in request.FILES['csv'].chunks():
-            buf.write(chunk)
-
-        buf.seek(0)
-
-        # Convert to StringIO so the CSV reader can iterate over strings and not bytes
-        stream_reader = codecs.getreader('utf-8')
-        wrapped_file = stream_reader(buf)
-
-        # Load the CSV
-        parser = Parser()
-        entries = parser.load_from_buffer(wrapped_file)
-        buf.close()
-
-        with transaction.atomic():
-            models.Activity.objects.filter(user=request.user).delete()
-            models.Entry.objects.filter(user=request.user).delete()
-
-            activities = {}
-
-            for entry in entries:
-                db_entry = models.Entry()
-                db_entry.user = request.user
-                db_entry.datetime = entry.datetime
-                db_entry.mood_name = entry.mood.name
-                db_entry.mood = entry.mood.level
-                db_entry.notes = entry.notes
-
-                entry_activities = []
-
-                for activity in entry.activities:
-                    if activity not in activities:
-                        # Creating new activity
-                        db_activity = models.Activity()
-                        db_activity.user = request.user
-                        db_activity.name = activity
-                        db_activity.save()
-
-                        activities[activity] = db_activity
-
-                    entry_activities.append(activities.get(activity))
-
-                db_entry.save()
+        user_import = ds.lib.data.UserDataImport(request.user)
+        user_import.import_entries(entries)
 
         return redirect('ds:dashboard')
 
@@ -119,22 +81,7 @@ def process(request):
         params = {'err': 'no-input-file'}
         return redirect('{}?{}'.format(reverse('ds:index'), urllib.parse.urlencode(params)))
 
-    # Write the uploaded file into a buffer
-    buf = io.BytesIO()
-
-    for chunk in request.FILES['csv'].chunks():
-        buf.write(chunk)
-
-    buf.seek(0)
-
-    # Convert to StringIO so the CSV reader can iterate over strings and not bytes
-    stream_reader = codecs.getreader('utf-8')
-    wrapped_file = stream_reader(buf)
-
-    # Load the CSV
-    parser = Parser()
-    entries = parser.load_from_buffer(wrapped_file)
-    buf.close()
+    entries = ds.lib.data.get_entries_from_upload(request.FILES['csv'])
 
     # Create the charts and save them into a buffer
     plot = ds.lib.plot.Plot(entries)
@@ -152,6 +99,7 @@ def process(request):
 def login_view(request):
     cont = {}
 
+    # TODO: Check GET param 'next' for redirects
     if request.method == 'POST':
         login_form = ds.forms.LoginForm(request.POST)
 

@@ -3,4 +3,4 @@
 Lib for the project
 """
 
-from . import plot
+from . import data, plot
