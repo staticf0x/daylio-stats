@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
+from django.db import transaction
 
 import ds.forms
 import ds.lib
@@ -66,8 +67,35 @@ def upload(request):
         entries = parser.load_from_buffer(wrapped_file)
         buf.close()
 
-        for entry in entries:
-            pass
+        with transaction.atomic():
+            models.Activity.objects.filter(user=request.user).delete()
+            models.Entry.objects.filter(user=request.user).delete()
+
+            activities = {}
+
+            for entry in entries:
+                db_entry = models.Entry()
+                db_entry.user = request.user
+                db_entry.datetime = entry.datetime
+                db_entry.mood_name = entry.mood.name
+                db_entry.mood = entry.mood.level
+                db_entry.notes = entry.notes
+
+                entry_activities = []
+
+                for activity in entry.activities:
+                    if activity not in activities:
+                        # Creating new activity
+                        db_activity = models.Activity()
+                        db_activity.user = request.user
+                        db_activity.name = activity
+                        db_activity.save()
+
+                        activities[activity] = db_activity
+
+                    entry_activities.append(activities.get(activity))
+
+                db_entry.save()
 
         return redirect('ds:dashboard')
 
