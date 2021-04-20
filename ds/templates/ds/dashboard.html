@@ -1,5 +1,12 @@
 {% extends 'ds/base.html' %}
 
 {% block content %}
+<h1 class="title">Dashboard</h1>
+
+<p>
+    Total entries: {{ count }}<br>
+    First entry: {{ first.datetime | date:'Y-m-d h:i' }}<br>
+    Last entry: {{ last.datetime | date:'Y-m-d h:i' }}
+</p>
 
 {% endblock content %}
