@@ -33,11 +33,18 @@ def get_entries_from_upload(file_field) -> List[Entry]:
     return entries
 
 
+def get_user_settings(user) -> models.UserSettings:
+    """Return UserSettings for a given user."""
+
+    return models.UserSettings.objects.get(user=user)
+
+
 class UserDataImport:
     """A class to import user data (entries from CSV)."""
 
     def __init__(self, user):
         self.user = user
+        self.settings = get_user_settings(user)
 
     def import_entries(self, entries: List[Entry]) -> None:
         """Import entries for a user."""
@@ -86,6 +93,8 @@ class UserDataImport:
     def __import_entries(self, entries: List[Entry]):
         """Import all entries."""
 
+        save_notes = self.settings.save_notes
+
         with transaction.atomic():
             to_import = []
 
@@ -95,8 +104,9 @@ class UserDataImport:
                 db_entry.datetime = entry.datetime
                 db_entry.mood_name = entry.mood.name
                 db_entry.mood = entry.mood.level
-                # TODO: check settings
-                db_entry.notes = entry.notes
+
+                if save_notes:
+                    db_entry.notes = entry.notes
 
                 to_import.append(db_entry)
 
