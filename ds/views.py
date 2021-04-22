@@ -142,3 +142,12 @@ def settings(request):
     cont['form'] = settings_form
 
     return render(request, 'ds/settings.html', cont)
+
+
+@login_required(login_url='/login/')
+def delete_account(request):
+    if request.method == 'POST':
+        # TODO: Delete account
+        pass
+
+    return redirect('ds:index')

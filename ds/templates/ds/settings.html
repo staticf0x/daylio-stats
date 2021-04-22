@@ -26,11 +26,42 @@
             are concerned about your privacy.
         </p>
     </div>
+
     <div class="field">
         <div class="control">
             <button class="button is-success">Save</button>
         </div>
     </div>
+
+    {% csrf_token %}
+</form>
+
+<hr>
+
+<h2 class="subtitle is-4">Delete account</h2>
+
+<div class="content">
+    <p class="has-text-danger">
+        By deleting your account, all your associated data will be deleted permanently,
+        without any way of restoring them.
+    </p>
+</div>
+
+<form action="{% url 'ds:delete_account' %}" method="post">
+    <div class="field">
+        <label class="label">To confirm account deletion, please enter your password:</label>
+    </div>
+
+    <div class="field has-addons">
+        <div class="control">
+            <input class="input is-danger" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="control">
+            <button class="button is-danger">Delete</button>
+        </div>
+    </div>
+
     {% csrf_token %}
 </form>
 {% endblock content %}
