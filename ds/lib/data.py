@@ -4,6 +4,7 @@ import codecs
 import io
 from typing import List
 
+from daylio_parser.config import MoodConfig
 from daylio_parser.parser import Entry, Parser
 from django.db import connection, transaction
 
@@ -37,6 +38,12 @@ def get_user_settings(user) -> models.UserSettings:
     """Return UserSettings for a given user."""
 
     return models.UserSettings.objects.get(user=user)
+
+
+def get_user_mood_config(user) -> MoodConfig:
+    """Return MoodConfig for a given user."""
+
+    return MoodConfig(get_user_settings(user).mood_config)
 
 
 class UserDataImport:
