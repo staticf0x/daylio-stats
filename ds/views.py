@@ -41,6 +41,7 @@ def dashboard(request):
     cont['count'] = entries.count()
     cont['first'] = entries[0]
     cont['last'] = entries[entries.count() - 1]
+    cont['days_since_first'] = (cont['last'].datetime - cont['first'].datetime).days
 
     return render(request, 'ds/dashboard.html', cont)
 
