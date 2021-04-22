@@ -10,20 +10,20 @@ from ds import views
 app_name = 'ds'
 
 urlpatterns = [
-    # Anonymous processing
-    path('', views.index, name='index'),
-    path('process/', views.process, name='process'),
-
-    # For logged-in users
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('upload/', views.upload, name='upload'),
-    path('settings/', views.settings, name='settings'),
-    path('settings/delete/', views.delete_account, name='delete_account'),
-
     # Static pages
-    path('about/', views.about, name='about'),
+    path('', views.static.index, name='index'),
+    path('about/', views.static.about, name='about'),
 
-    # Login/logout
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    # Anonymous processing
+    path('process/', views.anonymous.process, name='process'),
+
+    # Tools for logged-in users
+    path('dashboard/', views.tools.dashboard, name='dashboard'),
+    path('upload/', views.tools.upload, name='upload'),
+
+    # User views
+    path('settings/', views.users.settings, name='settings'),
+    path('settings/delete/', views.users.delete_account, name='delete_account'),
+    path('login/', views.users.login_view, name='login'),
+    path('logout/', views.users.logout_view, name='logout'),
 ]
