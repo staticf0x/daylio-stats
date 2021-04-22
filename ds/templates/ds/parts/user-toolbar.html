@@ -1,0 +1,21 @@
+{# These links will be visible in the navbar for logged in users #}
+
+<a href="{% url 'ds:dashboard' %}" class="navbar-item has-text-info">
+    <span class="icon">
+        <i class="fas fa-tachometer-alt"></i>
+    </span>
+
+    <span>
+        Dashboard
+    </span>
+</a>
+
+<a href="{% url 'ds:upload' %}" class="navbar-item">
+    <span class="icon">
+        <i class="fas fa-file-upload"></i>
+    </span>
+
+    <span>
+        Upload CSV
+    </span>
+</a>
