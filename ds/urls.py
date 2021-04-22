@@ -18,6 +18,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('upload/', views.upload, name='upload'),
     path('settings/', views.settings, name='settings'),
+    path('settings/delete/', views.delete_account, name='delete_account'),
 
     # Static pages
     path('about/', views.about, name='about'),
