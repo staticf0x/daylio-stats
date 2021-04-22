@@ -1,0 +1,48 @@
+<aside class="menu">
+    <p class="menu-label">
+        Overview
+    </p>
+
+    <ul class="menu-list">
+        <li>
+            <a href="{% url 'ds:dashboard' %}">
+                <i class="fas fa-fw fa-tachometer-alt"></i> Dashboard
+            </a>
+        </li>
+    </ul>
+
+    <p class="menu-label">
+        Tools
+    </p>
+
+    <ul class="menu-list">
+        <li>
+            <a href="">
+                <i class="fas fa-fw fa-chart-line"></i> Mood chart
+            </a>
+        </li>
+        <li>
+            <a href="">
+                <i class="fas fa-fw fa-list-ol"></i> Activities
+            </a>
+        </li>
+    </ul>
+
+    <p class="menu-label">
+        Manage
+    </p>
+
+    <ul class="menu-list">
+        <li>
+            <a href="{% url 'ds:upload' %}">
+                <i class="fas fa-fw fa-file-upload"></i> CSV upload
+            </a>
+        </li>
+
+        <li>
+            <a href="{% url 'ds:settings' %}">
+                <i class="fas fa-fw fa-cog"></i> Settings
+            </a>
+        </li>
+    </ul>
+</aside>
