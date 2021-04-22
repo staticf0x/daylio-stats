@@ -2,6 +2,14 @@
 
 from django.contrib.auth.models import User
 from django.db import models
+from daylio_parser.parser import Entry as DpEntry
+from daylio_parser.config import DEFAULT_MOODS
+
+
+def get_default_moods():
+    """Callable for default on mood_config field."""
+
+    return DEFAULT_MOODS.copy()
 
 
 class UserSettings(models.Model):
@@ -9,6 +17,7 @@ class UserSettings(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     save_notes = models.BooleanField(default=True)
+    mood_config = models.JSONField(default=get_default_moods)
 
     def __str__(self):
         return f'UserSettings ({self.id}, {self.user})'
