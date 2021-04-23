@@ -21,9 +21,7 @@ def dashboard(request):
     cont['last'] = entries[entries.count() - 1]
     cont['days_since_first'] = (cont['last'].datetime - cont['first'].datetime).days
 
-    conv = ds.lib.entries.EntryConverter(request.user)
-
-    return render(request, 'ds/dashboard.html', cont)
+    return render(request, 'ds/tools/dashboard.html', cont)
 
 
 @login_required(login_url='/login/')
@@ -42,4 +40,4 @@ def upload(request):
 
         return redirect('ds:dashboard')
 
-    return render(request, 'ds/upload.html', cont)
+    return render(request, 'ds/tools/upload.html', cont)
