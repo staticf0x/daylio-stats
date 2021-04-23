@@ -1,11 +1,15 @@
 """User management views."""
 
+import urllib
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 import ds.forms
+import ds.lib
 from ds import models
 
 
@@ -93,14 +97,30 @@ def settings(request):
             return redirect('ds:settings')
 
     cont['form'] = settings_form
+    cont['error'] = request.GET.get('error')
 
     return render(request, 'ds/settings.html', cont)
 
 
 @login_required(login_url='/login/')
 def delete_account(request):
-    if request.method == 'POST':
-        # TODO: Delete account
-        pass
+    """View for deleting user accounts."""
 
-    return redirect('ds:index')
+    if request.method == 'POST':
+        password = request.POST.get('password')
+
+        if not request.user.check_password(password):
+            params = {'error': 'Incorrect password'}
+            return redirect('{}?{}'.format(reverse('ds:settings'), urllib.parse.urlencode(params)))
+
+        # Password correct, let's delete the account
+        # Logout first
+        user = request.user
+        logout(request)
+
+        # Delete ALL data
+        ds.lib.data.delete_user_data(user)
+
+        return redirect('ds:index')
+
+    return redirect('ds:settings')

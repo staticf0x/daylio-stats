@@ -47,6 +47,12 @@
     </p>
 </div>
 
+{% if error %}
+<div class="notification is-danger">
+{{ error }}
+</div>
+{% endif %}
+
 <form action="{% url 'ds:delete_account' %}" method="post">
     <div class="field">
         <label class="label">To confirm account deletion, please enter your password:</label>
