@@ -46,6 +46,24 @@ def get_user_mood_config(user) -> MoodConfig:
     return MoodConfig(get_user_settings(user).mood_config)
 
 
+def delete_user_data(user):
+    """Delete all user data."""
+
+    with transaction.atomic():
+        # Remove uploaded data
+        with connection.cursor() as cur:
+            cur.execute('DELETE FROM ds_entry_activities WHERE user_id = %s', [user.id])
+            cur.execute('DELETE FROM ds_activity WHERE user_id = %s', [user.id])
+            cur.execute('DELETE FROM ds_entry WHERE user_id = %s', [user.id])
+
+        # Delete UserSettings
+        user_settings = get_user_settings(user)
+        user_settings.delete()
+
+        # Delete User
+        user.delete()
+
+
 class UserDataImport:
     """A class to import user data (entries from CSV)."""
 
