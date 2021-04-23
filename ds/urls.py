@@ -20,6 +20,7 @@ urlpatterns = [
     # Tools for logged-in users
     path('dashboard/', views.tools.dashboard, name='dashboard'),
     path('upload/', views.tools.upload, name='upload'),
+    path('activities/', views.tools.activities, name='activities'),
 
     # User views
     path('settings/', views.users.settings, name='settings'),
