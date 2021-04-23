@@ -14,6 +14,11 @@ from ds import models
 
 
 def login_view(request):
+    """Login the user."""
+
+    if request.user.is_authenticated:
+        return redirect('ds:dashboard')
+
     cont = {}
 
     # TODO: Check GET param 'next' for redirects
@@ -37,6 +42,8 @@ def login_view(request):
 
 
 def logout_view(request):
+    """Logout the user."""
+
     logout(request)
 
     return redirect('ds:index')
@@ -85,6 +92,8 @@ def register(request):
 
 @login_required(login_url='/login/')
 def settings(request):
+    """View for configuring UserSettings."""
+
     cont = {}
 
     settings = models.UserSettings.objects.get(user=request.user)
