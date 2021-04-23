@@ -24,7 +24,7 @@ def login_view(request):
 
             login(request, user)
 
-            return redirect('ds:index')
+            return redirect('ds:dashboard')
 
         cont['form'] = login_form
 
