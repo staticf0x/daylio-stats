@@ -27,6 +27,8 @@ def dashboard(request):
 
 @login_required(login_url='/login/')
 def upload(request):
+    """View for uploading CSV files for a user."""
+
     cont = {}
 
     if request.method == 'POST':
@@ -46,6 +48,8 @@ def upload(request):
 
 @login_required(login_url='/login/')
 def activities(request):
+    """Overview of activities and their average moods."""
+
     cont = {}
 
     conv = ds.lib.entries.EntryConverter(request.user)
