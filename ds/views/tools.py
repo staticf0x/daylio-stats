@@ -1,6 +1,7 @@
 """Tools for logged-in users."""
 
 from daylio_parser.parser import Parser
+from daylio_parser.stats import Stats
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
@@ -41,3 +42,17 @@ def upload(request):
         return redirect('ds:dashboard')
 
     return render(request, 'ds/tools/upload.html', cont)
+
+
+@login_required(login_url='/login/')
+def activities(request):
+    cont = {}
+
+    conv = ds.lib.entries.EntryConverter(request.user)
+    entries = conv.get_entries()
+
+    stats = Stats(entries, ds.lib.data.get_user_mood_config(request.user))
+
+    cont['activities'] = sorted(stats.activity_moods().items(), key=lambda x: x[1], reverse=True)
+
+    return render(request, 'ds/tools/activities.html', cont)
