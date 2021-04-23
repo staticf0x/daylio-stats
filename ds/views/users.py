@@ -2,6 +2,7 @@
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
 import ds.forms
@@ -35,6 +36,47 @@ def logout_view(request):
     logout(request)
 
     return redirect('ds:index')
+
+
+def register(request):
+    """View for registering new accounts."""
+
+    if request.user.is_authenticated:
+        return redirect('ds:dashboard')
+
+    cont = {}
+
+    if request.method == 'POST':
+        register_form = ds.forms.RegisterForm(request.POST)
+
+        # TODO: Check for password complexity!
+        if register_form.is_valid():
+            # Create the user object
+            user = User.objects.create_user(
+                request.POST.get('username'),
+                '',
+                request.POST.get('password')
+            )
+            user.save()
+
+            # Create default UserSettings
+            user_settings = models.UserSettings()
+            user_settings.user = user
+            user_settings.save()
+
+            # Login the new user
+            user = authenticate(
+                username=request.POST.get('username'),
+                password=request.POST.get('password')
+            )
+
+            login(request, user)
+
+            return redirect('ds:dashboard')
+
+        cont['form'] = register_form
+
+    return render(request, 'ds/register.html', cont)
 
 
 @login_required(login_url='/login/')
