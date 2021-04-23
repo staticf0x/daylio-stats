@@ -21,6 +21,7 @@ urlpatterns = [
     path('dashboard/', views.tools.dashboard, name='dashboard'),
     path('upload/', views.tools.upload, name='upload'),
     path('activities/', views.tools.activities, name='activities'),
+    path('export/', views.tools.export, name='export'),
 
     # User views
     path('settings/', views.users.settings, name='settings'),

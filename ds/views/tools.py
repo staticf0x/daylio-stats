@@ -1,8 +1,11 @@
 """Tools for logged-in users."""
 
+import time
+
 from daylio_parser.parser import Parser
 from daylio_parser.stats import Stats
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 import ds.lib
@@ -60,3 +63,28 @@ def activities(request):
     cont['activities'] = sorted(stats.activity_moods().items(), key=lambda x: x[1], reverse=True)
 
     return render(request, 'ds/tools/activities.html', cont)
+
+
+@login_required(login_url='/login/')
+def export(request):
+    """Export chart (similar to anonymous upload)."""
+
+    cont = {}
+
+    if request.method == 'POST' and request.POST.get('export') == '1':
+        conv = ds.lib.entries.EntryConverter(request.user)
+        entries = conv.get_entries()
+
+        # Create the charts and save them into a buffer
+        plot = ds.lib.plot.Plot(entries)
+        buf = plot.plot_average_moods()
+
+        # Send the buffer as an attachment to the client
+        output_name = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
+
+        response = HttpResponse(buf, content_type='image/png')
+        response['Content-Disposition'] = f'attachment; filename={output_name}'
+
+        return response
+
+    return render(request, 'ds/tools/export.html', cont)

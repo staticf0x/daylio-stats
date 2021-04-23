@@ -1,0 +1,24 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+<h1 class="title">Export charts</h1>
+
+<div class="content">
+    This tool allows you to download generated charts that you can save
+    for later use.
+</div>
+
+<form action="{% url 'ds:export' %}" method="post">
+    <div class="field">
+        <div class="control">
+            <button class="button is-success">
+                <i class="fas fa-download mr-1"></i> Download
+            </button>
+        </div>
+    </div>
+
+    <input type="hidden" name="export" value="1">
+
+    {% csrf_token %}
+</form>
+{% endblock content %}
