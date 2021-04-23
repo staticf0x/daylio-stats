@@ -3,7 +3,7 @@
 {% block content %}
 <div class="columns">
     <div class="column is-half is-offset-one-quarter">
-        <h1 class="title">Login</h1>
+        <h1 class="title">Create new account</h1>
 
         {% if form.non_field_errors %}
         <div class="notification is-danger">
@@ -13,7 +13,7 @@
         </div>
         {% endif %}
 
-        <form action="{% url 'ds:login' %}" method="post">
+        <form action="{% url 'ds:register' %}" method="post">
             <div class="field">
                 <p class="control has-icons-left">
                     <input name="username" type="text" class="input" placeholder="Username" autofocus>
@@ -45,15 +45,26 @@
                 {% endfor %}
                 </p>
                 {% endif %}
-
-                <p class="help">
-                    Don't have an account yet?
-                    <a href="{% url 'ds:register' %}">Create one!</a>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input name="password_confirm" type="password" class="input" placeholder="Confirm password">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
                 </p>
+
+                {% if form.password_confirm.errors %}
+                <p class="help is-danger">
+                {% for error in form.password_confirm.errors %}
+                {{ error }}<br>
+                {% endfor %}
+                </p>
+                {% endif %}
             </div>
             <div class="field">
                 <div class="control">
-                    <button class="button is-success">Login</button>
+                    <button class="button is-success">Create account</button>
                 </div>
             </div>
             {% csrf_token %}
