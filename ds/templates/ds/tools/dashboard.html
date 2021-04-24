@@ -3,6 +3,7 @@
 {% block content %}
 <h1 class="title">Dashboard</h1>
 
+{% if count > 0 %}
 <article class="message">
     <div class="message-header">
         <p>Overview</p>
@@ -17,5 +18,23 @@
         </p>
     </div>
 </article>
+{% else %}
+<article class="message is-info">
+    <div class="message-header">
+        <p>No data yet</p>
+    </div>
+
+    <div class="message-body">
+        <p>
+            You have no entries to show yet.
+        </p>
+
+        <p>
+            <a href="{% url 'ds:upload' %}">Upload a CSV</a>
+            from your Daylio export to get your statistics.
+        </p>
+    </div>
+</article>
+{% endif %}
 
 {% endblock content %}

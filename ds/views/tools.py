@@ -22,9 +22,11 @@ def dashboard(request):
     entries = models.Entry.objects.filter(user=request.user).order_by('datetime')
 
     cont['count'] = entries.count()
-    cont['first'] = entries[0]
-    cont['last'] = entries[entries.count() - 1]
-    cont['days_since_first'] = (cont['last'].datetime - cont['first'].datetime).days
+
+    if entries.count() > 0:
+        cont['first'] = entries[0]
+        cont['last'] = entries[entries.count() - 1]
+        cont['days_since_first'] = (cont['last'].datetime - cont['first'].datetime).days
 
     return render(request, 'ds/tools/dashboard.html', cont)
 
