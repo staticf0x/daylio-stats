@@ -5,7 +5,7 @@ URL config for the ds (main) app
 
 from django.urls import path
 
-from ds import views
+from ds import api, views
 
 app_name = 'ds'
 
@@ -20,6 +20,7 @@ urlpatterns = [
     # Tools for logged-in users
     path('dashboard/', views.tools.dashboard, name='dashboard'),
     path('upload/', views.tools.upload, name='upload'),
+    path('charts/mood/', views.tools.mood_chart, name='mood_chart'),
     path('activities/', views.tools.activities, name='activities'),
     path('export/', views.tools.export, name='export'),
 
@@ -29,4 +30,7 @@ urlpatterns = [
     path('login/', views.users.login_view, name='login'),
     path('logout/', views.users.logout_view, name='logout'),
     path('register/', views.users.register, name='register'),
+
+    # API
+    path('api/data/moods', api.data.moods, name='api_data_moods'),
 ]

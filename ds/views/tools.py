@@ -53,6 +53,13 @@ def upload(request):
 
 
 @login_required(login_url='/login/')
+def mood_chart(request):
+    cont = {}
+
+    return render(request, 'ds/tools/mood-chart.html', cont)
+
+
+@login_required(login_url='/login/')
 def activities(request):
     """Overview of activities and their average moods."""
 
