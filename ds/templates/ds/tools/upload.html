@@ -3,8 +3,9 @@
 {% block content %}
 <h1 class="title">Upload CSV</h1>
 
-<article class="message is-info">
+<article class="message is-warning">
     <div class="message-body">
+        <i class="fas fa-exclamation-triangle"></i>
         Uploading a CSV file will overwrite your existing data. If you want to keep
         separate imports, use different accounts.
     </div>
@@ -41,4 +42,7 @@
         </form>
     </div>
 </article>
+
+{% include 'ds/parts/help-export.html' %}
+
 {% endblock content %}
