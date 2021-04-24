@@ -10,7 +10,6 @@
             <th>#</th>
             <th>Activity</th>
             <th>Average mood</th>
-            <th>Standard deviation</th>
         </tr>
     </thead>
     <tbody>
@@ -18,8 +17,9 @@
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ activity }}</td>
-            <td>{{ values.0|floatformat:2 }}</td>
-            <td>{{ values.1|floatformat:2 }}</td>
+            <td>
+                {{ values.0|floatformat:2 }} <span class="has-text-grey">± {{ values.1|floatformat:2 }}</span>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
