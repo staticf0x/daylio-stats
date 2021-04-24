@@ -1,0 +1,27 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+
+<script>
+$(document).ready(function() {
+    var ctx = $('#mood-chart');
+
+    $.ajax({
+        url: ctx.data('url'),
+        success: function(data) {
+            var chart = new Chart(ctx, {
+            type: 'line',
+            data: data.data,
+            options: {
+                responsive: false
+            }
+        });
+        }
+    });
+})
+</script>
+
+<h1 class="title">Mood over time</h1>
+
+<canvas id="mood-chart" data-url="{% url 'ds:api_data_moods' %}" width="800" height="400"></canvas>
+{% endblock content %}
