@@ -24,6 +24,17 @@ After cloning the repo:
 - `$ npm install` (this is only for development currently)
 - `$ poetry install`
 
+### Database
+
+Running from local MariaDB server, you'll need a database and a user, create
+them using this:
+
+```mysql
+CREATE DATABASE dayliostats CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'dayliostats'@'localhost' IDENTIFIED BY 'dayliostats';
+GRANT ALL PRIVILEGES ON dayliostats.* TO 'dayliostats'@'localhost';
+```
+
 ### Secret key for Django
 
 Either set the `DS_SECRET_KEY` env variable directly, or read the key from a file.
