@@ -162,9 +162,7 @@ class UserDataImport:
 
                 # Create the connecting entry (EntryActivities)
                 through_obj = models.Entry.activities.through(
-                    entry_id=id_entry,
-                    activity_id=id_activity,
-                    user_id=id_user
+                    entry_id=id_entry, activity_id=id_activity, user_id=id_user
                 )
 
                 to_import.append(through_obj)

@@ -28,8 +28,7 @@ def login_view(request):
         if login_form.is_valid():
             # User can log in
             user = authenticate(
-                username=request.POST.get('username'),
-                password=request.POST.get('password')
+                username=request.POST.get('username'), password=request.POST.get('password')
             )
 
             login(request, user)
@@ -64,9 +63,7 @@ def register(request):
         if register_form.is_valid():
             # Create the user object
             user = User.objects.create_user(
-                request.POST.get('username'),
-                '',
-                request.POST.get('password')
+                request.POST.get('username'), '', request.POST.get('password')
             )
             user.save()
 
@@ -77,8 +74,7 @@ def register(request):
 
             # Login the new user
             user = authenticate(
-                username=request.POST.get('username'),
-                password=request.POST.get('password')
+                username=request.POST.get('username'), password=request.POST.get('password')
             )
 
             login(request, user)
