@@ -8,3 +8,5 @@ db.sqlite3
 __pycache__/
 cachegrind.out*
 data/db
+.coverage
+moods.json
