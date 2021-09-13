@@ -15,9 +15,7 @@ def global_vars(request):
     Add global variables
     """
 
-    cont = {
-        'VERSION': VERSION
-    }
+    cont = {'VERSION': VERSION}
 
     if request.GET.get('err', None):
         cont['ERR'] = ERRORS.get(request.GET['err'], 'Unknown error')

@@ -47,11 +47,15 @@ class Command(BaseCommand):
             if until_today.days < 14:
                 recent = f' ({until_today.days} days ago)'
 
-            print(OUTPUT_FMT.format(period.start_date.strftime('%d/%m/%Y'),
-                                    period.end_date.strftime('%d/%m/%Y'),
-                                    period.duration,
-                                    period.avg_mood,
-                                    recent))
+            print(
+                OUTPUT_FMT.format(
+                    period.start_date.strftime('%d/%m/%Y'),
+                    period.end_date.strftime('%d/%m/%Y'),
+                    period.duration,
+                    period.avg_mood,
+                    recent,
+                )
+            )
 
         print('\nLows:')
         for period in stats.find_low_periods():
@@ -61,8 +65,12 @@ class Command(BaseCommand):
             if until_today.days < 14:
                 recent = f' ({until_today.days} days ago)'
 
-            print(OUTPUT_FMT.format(period.start_date.strftime('%d/%m/%Y'),
-                                    period.end_date.strftime('%d/%m/%Y'),
-                                    period.duration,
-                                    period.avg_mood,
-                                    recent))
+            print(
+                OUTPUT_FMT.format(
+                    period.start_date.strftime('%d/%m/%Y'),
+                    period.end_date.strftime('%d/%m/%Y'),
+                    period.duration,
+                    period.avg_mood,
+                    recent,
+                )
+            )

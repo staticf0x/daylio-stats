@@ -21,10 +21,7 @@ def api_login_required(view):
 
     def inner(request):
         if not request.user.is_authenticated:
-            return JsonResponse(
-                {'status': 'error', 'message': 'Not authenticated'},
-                status=403
-            )
+            return JsonResponse({'status': 'error', 'message': 'Not authenticated'}, status=403)
 
         return view(request)
 

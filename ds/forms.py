@@ -18,8 +18,7 @@ class LoginForm(forms.Form):
         super().clean()
 
         user = authenticate(
-            username=self.cleaned_data['username'],
-            password=self.cleaned_data['password']
+            username=self.cleaned_data['username'], password=self.cleaned_data['password']
         )
 
         if not user:
@@ -52,4 +51,6 @@ class RegisterForm(forms.Form):
 class SettingsForm(forms.ModelForm):
     class Meta:
         model = UserSettings
-        fields = ['save_notes', ]
+        fields = [
+            'save_notes',
+        ]

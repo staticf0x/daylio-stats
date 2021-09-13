@@ -42,9 +42,7 @@ class Plot:
 
         count_plots = 1 + len(self.plots)
 
-        _, axes = plt.subplots(count_plots,
-                               1,
-                               figsize=(12, 4*count_plots))
+        _, axes = plt.subplots(count_plots, 1, figsize=(12, 4 * count_plots))
 
         dates, masked_data = self.__plot_data()
         plot_args = self.__plot_args(dates, masked_data)

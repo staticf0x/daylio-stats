@@ -17,10 +17,11 @@ class EntryConverter:
     def get_entries(self):
         """Convert stored DB entries into Entry objects for daylio_parser."""
 
-        db_entries = models.Entry.objects\
-            .filter(user=self.user)\
-            .order_by('datetime')\
+        db_entries = (
+            models.Entry.objects.filter(user=self.user)
+            .order_by('datetime')
             .prefetch_related('activities')
+        )
 
         entries = []
 
@@ -31,7 +32,7 @@ class EntryConverter:
                 db_entry.datetime,
                 self.mood_config.get(db_entry.mood_name),
                 [a.name for a in db_entry.activities.all()],
-                db_entry.notes
+                db_entry.notes,
             )
 
             entries.append(entry)
