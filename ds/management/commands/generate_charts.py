@@ -57,5 +57,5 @@ class Command(BaseCommand):
         plots = (5, 10)
 
         print('Generating charts...')
-        plot = ds.lib.plot.Plot(entries, plots)
+        plot = ds.lib.plot.Plot(entries, plots, config)
         plot.plot_average_moods(kwargs['output'])

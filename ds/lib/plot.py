@@ -19,11 +19,15 @@ class Plot:
     A class for interpolating and plotting the data
     """
 
-    def __init__(self, entries: List[Entry], plots=(5, )):
+    def __init__(self, entries: List[Entry], plots=(5,), config: MoodConfig = None):
         self.entries = entries
         self.plots = plots
 
-        self.config = MoodConfig()
+        if config:
+            self.config = config
+        else:
+            self.config = MoodConfig()
+
         self.stats = Stats(entries, self.config)
         self.plotdata = PlotData(entries, self.config)
 
@@ -49,7 +53,7 @@ class Plot:
         axes[0].set_title('Average mood in each day')
         axes[0].set_xlabel('Date')
         axes[0].set_ylabel('Mood')
-        axes[0].set_yticks(np.arange(1, len(self.config.moods) + 1, 1))
+        axes[0].set_yticks(np.arange(1, 6, 1))
         axes[0].grid()
 
         self.__plot_rolling_means(axes[1:])
@@ -77,7 +81,7 @@ class Plot:
             axes[i].set_title(f'Rolling average of moods, window size = {n}')
             axes[i].set_xlabel('Date')
             axes[i].set_ylabel('Mood')
-            axes[i].set_yticks(np.arange(1, len(self.config.moods) + 1, 1))
+            axes[i].set_yticks(np.arange(1, 6, 1))
             axes[i].grid()
 
     def __plot_args(self, dates, masked_data):
