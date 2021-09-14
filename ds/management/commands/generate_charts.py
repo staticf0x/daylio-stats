@@ -58,4 +58,6 @@ class Command(BaseCommand):
 
         print('Generating charts...')
         plot = ds.lib.plot.Plot(entries, plots, config)
-        plot.plot_average_moods(kwargs['output'])
+
+        with open(kwargs['output'], 'wb') as fwrite:
+            fwrite.write(plot.plot_average_moods().read())

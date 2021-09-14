@@ -31,13 +31,10 @@ class Plot:
         self.stats = Stats(entries, self.config)
         self.plotdata = PlotData(entries, self.config)
 
-    def plot_average_moods(self, output_name=None):
+    def plot_average_moods(self) -> io.BytesIO:
         """
         Plot the average mood data into a PNG file.
-        If output_name is not provided, returns a buffer
-        with the image data. Otherwise returns the output_name.
-
-        TODO: Might not be a good idea to return two different things
+        Returns a buffer with the image data.
         """
 
         count_plots = 1 + len(self.plots)
@@ -58,15 +55,9 @@ class Plot:
 
         plt.tight_layout()
 
-        if output_name:
-            fwrite = output_name
-        else:
-            fwrite = io.BytesIO()
-
+        fwrite = io.BytesIO()
         plt.savefig(fwrite, dpi=120)
-
-        if not output_name:
-            fwrite.seek(0)
+        fwrite.seek(0)
 
         return fwrite
 
