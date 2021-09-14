@@ -11,10 +11,7 @@ import ds.lib
 
 
 def process(request):
-    """
-    Process the input file and redirect to result page
-    """
-
+    """Process the input file and redirect to result page."""
     if not request.FILES.get('csv', None):
         params = {'err': 'no-input-file'}
         return redirect('{}?{}'.format(reverse('ds:index'), urllib.parse.urlencode(params)))

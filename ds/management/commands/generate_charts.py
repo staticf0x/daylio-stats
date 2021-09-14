@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-A command to load the data and plot them manually
-"""
+"""A command to load the data and plot them manually."""
 
 import json
 import os

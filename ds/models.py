@@ -1,7 +1,6 @@
 """App models."""
 
 from daylio_parser.config import DEFAULT_MOODS
-from daylio_parser.parser import Entry as DpEntry
 from django.contrib.auth.models import User
 from django.db import models
 

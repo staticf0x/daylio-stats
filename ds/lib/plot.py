@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-A class for plotting the data
-"""
+"""A class for plotting the data."""
 
 import io
 from typing import List
@@ -15,11 +12,10 @@ from daylio_parser.stats import Stats
 
 
 class Plot:
-    """
-    A class for interpolating and plotting the data
-    """
+    """A class for interpolating and plotting the data."""
 
     def __init__(self, entries: List[Entry], plots=(5,), config: MoodConfig = None):
+        """Create the object with entries."""
         self.entries = entries
         self.plots = plots
 
@@ -32,11 +28,7 @@ class Plot:
         self.plotdata = PlotData(entries, self.config)
 
     def plot_average_moods(self) -> io.BytesIO:
-        """
-        Plot the average mood data into a PNG file.
-        Returns a buffer with the image data.
-        """
-
+        """Plot the average mood data into a PNG file. Returns a buffer with the image data."""
         count_plots = 1 + len(self.plots)
 
         _, axes = plt.subplots(count_plots, 1, figsize=(12, 4 * count_plots))

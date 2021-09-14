@@ -1,13 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Look for high and low periods in the data
-"""
+"""Look for high and low periods in the data."""
 
 import datetime
 import os
 
-import numpy as np
 from daylio_parser.parser import Parser
 from daylio_parser.stats import Stats
 from django.core.management.base import BaseCommand

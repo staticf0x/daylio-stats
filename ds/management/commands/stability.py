@@ -1,8 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Look at how much the mood changes over one day
-"""
+"""Look at how much the mood changes over one day."""
 
 import os
 

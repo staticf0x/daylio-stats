@@ -1,12 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Show a list of activities from best to worst
-"""
+"""Show a list of activities from best to worst."""
 
 import os
 
-import numpy as np
 from daylio_parser.parser import Parser
 from daylio_parser.stats import Stats
 from django.core.management.base import BaseCommand
