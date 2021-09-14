@@ -1,8 +1,8 @@
 """Tools for logged-in users."""
 
 import time
+import urllib
 
-from daylio_parser.parser import Parser
 from daylio_parser.stats import Stats
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -15,8 +15,7 @@ from ds import models
 
 @login_required(login_url='/login/')
 def dashboard(request):
-    """Main dashboard."""
-
+    """Display main dashboard."""
     cont = {}
 
     entries = models.Entry.objects.filter(user=request.user).order_by('datetime')
@@ -34,7 +33,6 @@ def dashboard(request):
 @login_required(login_url='/login/')
 def upload(request):
     """View for uploading CSV files for a user."""
-
     cont = {}
 
     if request.method == 'POST':
@@ -62,7 +60,6 @@ def mood_chart(request):
 @login_required(login_url='/login/')
 def activities(request):
     """Overview of activities and their average moods."""
-
     cont = {}
 
     conv = ds.lib.entries.EntryConverter(request.user)
@@ -78,7 +75,6 @@ def activities(request):
 @login_required(login_url='/login/')
 def export(request):
     """Export chart (similar to anonymous upload)."""
-
     cont = {}
 
     if request.method == 'POST' and request.POST.get('export') == '1':

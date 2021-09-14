@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Forms
-"""
+"""Project forms."""
 
 from django import forms
 from django.contrib.auth import authenticate
@@ -32,16 +29,14 @@ class RegisterForm(forms.Form):
 
     def clean_password_confirm(self):
         """Check if passwords match."""
-
         if 'password' in self.cleaned_data and 'password_confirm' in self.cleaned_data:
             if self.cleaned_data['password'] != self.cleaned_data['password_confirm']:
                 raise forms.ValidationError('Passwords don\'t match')
 
     def clean_username(self):
         """Check if user already exists."""
-
         try:
-            user = User.objects.get(username=self.cleaned_data['username'])
+            _ = User.objects.get(username=self.cleaned_data['username'])
 
             raise forms.ValidationError('Username already exists')
         except User.DoesNotExist:

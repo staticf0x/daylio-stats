@@ -1,1 +1,3 @@
-from . import data
+"""API views."""
+
+from . import data  # noqa: F401

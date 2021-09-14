@@ -13,7 +13,6 @@ from ds import models
 
 def get_entries_from_upload(file_field) -> List[Entry]:
     """Return entries from an uploaded CSV file."""
-
     # Write the uploaded file into a buffer
     buf = io.BytesIO()
 
@@ -36,19 +35,16 @@ def get_entries_from_upload(file_field) -> List[Entry]:
 
 def get_user_settings(user) -> models.UserSettings:
     """Return UserSettings for a given user."""
-
     return models.UserSettings.objects.get(user=user)
 
 
 def get_user_mood_config(user) -> MoodConfig:
     """Return MoodConfig for a given user."""
-
     return MoodConfig(get_user_settings(user).mood_config)
 
 
 def delete_user_data(user):
     """Delete all user data."""
-
     with transaction.atomic():
         # Remove uploaded data
         with connection.cursor() as cur:
@@ -68,12 +64,12 @@ class UserDataImport:
     """A class to import user data (entries from CSV)."""
 
     def __init__(self, user):
+        """Create the object for a user."""
         self.user = user
         self.settings = get_user_settings(user)
 
     def import_entries(self, entries: List[Entry]) -> None:
         """Import entries for a user."""
-
         self.__delete_existing()
         self.__import_activities(entries)
         db_entries = self.__import_entries(entries)
@@ -81,7 +77,6 @@ class UserDataImport:
 
     def __delete_existing(self):
         """Delete all existing data for the user."""
-
         # The reason this is done in raw SQL is that we need the to
         # delete the data quickly, without ORM checking the cascade
         # to delete (it's emulated in Django and takes some time
@@ -95,7 +90,6 @@ class UserDataImport:
 
     def __import_activities(self, entries: List[Entry]):
         """Import activities from entries (unique)."""
-
         # Make activities unique
         activities = set()
 
@@ -117,7 +111,6 @@ class UserDataImport:
 
     def __import_entries(self, entries: List[Entry]):
         """Import all entries."""
-
         save_notes = self.settings.save_notes
 
         with transaction.atomic():
@@ -141,11 +134,7 @@ class UserDataImport:
         return models.Entry.objects.filter(user=self.user).order_by('datetime')
 
     def __set_activities(self, entries: List[Entry], db_entries):
-        """
-        Import a many-to-many relationship between entries (db_entries)
-        and activities (through entries and Activity objects).
-        """
-
+        """Import a many-to-many relationship between entries (db_entries) and activities."""
         # Activity LUT
         activities = {obj.name: obj for obj in models.Activity.objects.filter(user=self.user)}
 
