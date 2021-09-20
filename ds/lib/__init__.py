@@ -2,6 +2,8 @@
 
 from django.http import JsonResponse
 
+from . import data, entries, plot  # noqa: F401
+
 
 def api_login_required(view):  # noqa: D401
     """
