@@ -11,7 +11,7 @@ from django.db import connection, transaction
 from ds import models
 
 
-def get_entries_from_upload(file_field) -> List[Entry]:
+def get_entries_from_upload(file_field, user=None) -> List[Entry]:
     """Return entries from an uploaded CSV file."""
     # Write the uploaded file into a buffer
     buf = io.BytesIO()
@@ -25,8 +25,14 @@ def get_entries_from_upload(file_field) -> List[Entry]:
     stream_reader = codecs.getreader('utf-8')
     wrapped_file = stream_reader(buf)
 
+    # Config
+    config = None
+
+    if user:
+        config = get_user_mood_config(user)
+
     # Load the CSV
-    parser = Parser()
+    parser = Parser(config)
     entries = parser.load_from_buffer(wrapped_file)
     buf.close()
 
