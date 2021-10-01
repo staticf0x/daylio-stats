@@ -48,4 +48,5 @@ class SettingsForm(forms.ModelForm):
         model = UserSettings
         fields = [
             'save_notes',
+            'mood_config',
         ]

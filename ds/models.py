@@ -7,7 +7,6 @@ from django.db import models
 
 def get_default_moods():
     """Callable for default on mood_config field."""
-
     return DEFAULT_MOODS.copy()
 
 

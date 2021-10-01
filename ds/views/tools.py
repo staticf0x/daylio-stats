@@ -40,7 +40,7 @@ def upload(request):
             params = {'err': 'no-input-file'}
             return redirect('{}?{}'.format(reverse('ds:upload'), urllib.parse.urlencode(params)))
 
-        entries = ds.lib.data.get_entries_from_upload(request.FILES['csv'])
+        entries = ds.lib.data.get_entries_from_upload(request.FILES['csv'], request.user)
 
         user_import = ds.lib.data.UserDataImport(request.user)
         user_import.import_entries(entries)
