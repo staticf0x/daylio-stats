@@ -2,7 +2,7 @@
 name = "daylio-stats"
 version = "1.0.0"
 description = "A Django web app to generate stats from Daylio exports"
-authors = ["Meesha <44530786+meesha7@users.noreply.github.com>"]
+authors = ["staticf0x <44530786+staticf0x@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
