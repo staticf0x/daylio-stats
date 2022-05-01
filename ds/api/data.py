@@ -10,25 +10,18 @@ from ds.lib.entries import EntryConverter
 
 @api_login_required
 def moods(request):
+    """Return data for the mood plot."""
     # TODO: These are dummy data
     data = {
-        'status': 'ok',
-        'data': {
-            'labels': ['a', 'b', 'c'],
-            'datasets': [
-                {
-                    'label': 'Mood',
-                    'data': [1, 2, 1.5]
-                }
-            ]
-        }
+        "status": "ok",
+        "data": {"labels": ["a", "b", "c"], "datasets": [{"label": "Mood", "data": [1, 2, 1.5]}]},
     }
 
     conv = EntryConverter(request.user)
     entries = conv.get_entries()
     mood_config = get_user_mood_config(request.user)
 
-    plot_data = PlotData(entries, mood_config)
+    _ = PlotData(entries, mood_config)
 
     # TODO: The rest
 

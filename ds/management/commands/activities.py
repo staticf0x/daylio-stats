@@ -8,23 +8,23 @@ from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    help = 'Generate additional stats'
+    help = "Generate additional stats"
 
     def add_arguments(self, parser):
-        parser.add_argument('path', type=str, help='Path to the Daylio export')
+        parser.add_argument("path", type=str, help="Path to the Daylio export")
 
     def handle(self, *args, **kwargs):
-        if not os.path.exists(kwargs['path']):
+        if not os.path.exists(kwargs["path"]):
             print(f'Path: {kwargs["path"]} doesn\'t exist')
             return
 
         # Load the data
         parser = Parser()
-        entries = parser.load_csv(kwargs['path'])
+        entries = parser.load_csv(kwargs["path"])
 
         stats = Stats(entries)
         activities_avg = stats.activity_moods()
 
         # TODO: Add coloring for different levels
         for activity, data in sorted(activities_avg.items(), key=lambda x: x[1][0], reverse=True):
-            print(f'{activity:15s} {data[0]:.2f} ± {data[1]:.2f}')
+            print(f"{activity:15s} {data[0]:.2f} ± {data[1]:.2f}")

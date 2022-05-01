@@ -22,7 +22,7 @@ def get_entries_from_upload(file_field, user=None) -> List[Entry]:
     buf.seek(0)
 
     # Convert to StringIO so the CSV reader can iterate over strings and not bytes
-    stream_reader = codecs.getreader('utf-8')
+    stream_reader = codecs.getreader("utf-8")
     wrapped_file = stream_reader(buf)
 
     # Config
@@ -54,9 +54,9 @@ def delete_user_data(user):
     with transaction.atomic():
         # Remove uploaded data
         with connection.cursor() as cur:
-            cur.execute('DELETE FROM ds_entry_activities WHERE user_id = %s', [user.id])
-            cur.execute('DELETE FROM ds_activity WHERE user_id = %s', [user.id])
-            cur.execute('DELETE FROM ds_entry WHERE user_id = %s', [user.id])
+            cur.execute("DELETE FROM ds_entry_activities WHERE user_id = %s", [user.id])
+            cur.execute("DELETE FROM ds_activity WHERE user_id = %s", [user.id])
+            cur.execute("DELETE FROM ds_entry WHERE user_id = %s", [user.id])
 
         # Delete UserSettings
         user_settings = get_user_settings(user)
@@ -90,9 +90,9 @@ class UserDataImport:
         # See models.EntryActivities
 
         with connection.cursor() as cur:
-            cur.execute('DELETE FROM ds_entry_activities WHERE user_id = %s', [self.user.id])
-            cur.execute('DELETE FROM ds_activity WHERE user_id = %s', [self.user.id])
-            cur.execute('DELETE FROM ds_entry WHERE user_id = %s', [self.user.id])
+            cur.execute("DELETE FROM ds_entry_activities WHERE user_id = %s", [self.user.id])
+            cur.execute("DELETE FROM ds_activity WHERE user_id = %s", [self.user.id])
+            cur.execute("DELETE FROM ds_entry WHERE user_id = %s", [self.user.id])
 
     def __import_activities(self, entries: List[Entry]):
         """Import activities from entries (unique)."""
@@ -137,7 +137,7 @@ class UserDataImport:
             models.Entry.objects.bulk_create(to_import)
 
         # Return all new entries sorted by datetime (same order as input entries)
-        return models.Entry.objects.filter(user=self.user).order_by('datetime')
+        return models.Entry.objects.filter(user=self.user).order_by("datetime")
 
     def __set_activities(self, entries: List[Entry], db_entries):
         """Import a many-to-many relationship between entries (db_entries) and activities."""

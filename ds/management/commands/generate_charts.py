@@ -12,48 +12,48 @@ import ds.lib
 
 
 class Command(BaseCommand):
-    help = 'Generate the charts manually'
+    help = "Generate the charts manually"
 
     def add_arguments(self, parser):
-        DEFAULT_OUTPUT_NAME = 'daylio-plot-{}.png'.format(time.strftime('%Y-%m-%d-%H%M%S'))
+        DEFAULT_OUTPUT_NAME = "daylio-plot-{}.png".format(time.strftime("%Y-%m-%d-%H%M%S"))
 
-        parser.add_argument('path', type=str, help='Path to the Daylio export')
+        parser.add_argument("path", type=str, help="Path to the Daylio export")
         parser.add_argument(
-            '--output', '-o', type=str, default=DEFAULT_OUTPUT_NAME, help='Ouptut path for the plot'
+            "--output", "-o", type=str, default=DEFAULT_OUTPUT_NAME, help="Ouptut path for the plot"
         )
-        parser.add_argument('--config', '-c', type=str, help='Path to the config file')
+        parser.add_argument("--config", "-c", type=str, help="Path to the config file")
 
     def handle(self, *args, **kwargs):
-        if not os.path.exists(kwargs['path']):
+        if not os.path.exists(kwargs["path"]):
             print(f'Path: {kwargs["path"]} doesn\'t exist')
             return
 
-        print('Loading config...')
+        print("Loading config...")
 
-        if kwargs['config']:
-            if not os.path.exists(kwargs['config']):
+        if kwargs["config"]:
+            if not os.path.exists(kwargs["config"]):
                 print(f'Config file: {kwargs["config"]} doesn\'t exist')
                 return
 
-            with open(kwargs['config'], 'r') as fread:
+            with open(kwargs["config"], "r") as fread:
                 data = json.load(fread)
 
-                moods = data.get('moods')
-                colors = data.get('colors')
+                moods = data.get("moods")
+                colors = data.get("colors")
 
                 config = MoodConfig(moods, colors)
         else:
             config = MoodConfig()
 
-        print('Loading data...')
+        print("Loading data...")
 
         parser = Parser(config)
-        entries = parser.load_csv(kwargs['path'])
+        entries = parser.load_csv(kwargs["path"])
 
         plots = (5, 10)
 
-        print('Generating charts...')
+        print("Generating charts...")
         plot = ds.lib.plot.Plot(entries, plots, config)
 
-        with open(kwargs['output'], 'wb') as fwrite:
+        with open(kwargs["output"], "wb") as fwrite:
             fwrite.write(plot.plot_average_moods().read())
