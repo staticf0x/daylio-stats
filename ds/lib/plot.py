@@ -37,9 +37,9 @@ class Plot:
         plot_args = self.__plot_args(dates, masked_data)
 
         axes[0].plot(*plot_args)
-        axes[0].set_title('Average mood in each day')
-        axes[0].set_xlabel('Date')
-        axes[0].set_ylabel('Mood')
+        axes[0].set_title("Average mood in each day")
+        axes[0].set_xlabel("Date")
+        axes[0].set_ylabel("Mood")
         axes[0].set_yticks(np.arange(1, 6, 1))
         axes[0].grid()
 
@@ -59,9 +59,9 @@ class Plot:
             plot_args = self.__plot_args(dates, masked_data)
 
             axes[i].plot(*plot_args)
-            axes[i].set_title(f'Rolling average of moods, window size = {n}')
-            axes[i].set_xlabel('Date')
-            axes[i].set_ylabel('Mood')
+            axes[i].set_title(f"Rolling average of moods, window size = {n}")
+            axes[i].set_xlabel("Date")
+            axes[i].set_ylabel("Mood")
             axes[i].set_yticks(np.arange(1, 6, 1))
             axes[i].grid()
 

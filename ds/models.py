@@ -18,7 +18,7 @@ class UserSettings(models.Model):
     mood_config = models.JSONField(default=get_default_moods)
 
     def __str__(self):
-        return f'UserSettings ({self.id}, {self.user})'
+        return f"UserSettings ({self.id}, {self.user})"
 
 
 class EntryActivities(models.Model):
@@ -28,11 +28,11 @@ class EntryActivities(models.Model):
     """
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    activity = models.ForeignKey('Activity', on_delete=models.CASCADE)
-    entry = models.ForeignKey('Entry', on_delete=models.CASCADE)
+    activity = models.ForeignKey("Activity", on_delete=models.CASCADE)
+    entry = models.ForeignKey("Entry", on_delete=models.CASCADE)
 
     class Meta:
-        db_table = 'ds_entry_activities'
+        db_table = "ds_entry_activities"
 
 
 class Activity(models.Model):
@@ -46,10 +46,10 @@ class Activity(models.Model):
     name = models.CharField(max_length=64)
 
     class Meta:
-        unique_together = ('user', 'name')
+        unique_together = ("user", "name")
 
     def __str__(self):
-        return f'Activity ({self.id}, {self.user}): {self.name}'
+        return f"Activity ({self.id}, {self.user}): {self.name}"
 
 
 class Entry(models.Model):
@@ -63,4 +63,4 @@ class Entry(models.Model):
     notes = models.TextField()
 
     def __str__(self):
-        return f'Entry ({self.id}, {self.user}): {self.datetime} {self.mood_name}'
+        return f"Entry ({self.id}, {self.user}): {self.datetime} {self.mood_name}"

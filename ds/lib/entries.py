@@ -21,8 +21,8 @@ class EntryConverter:
         """Convert stored DB entries into Entry objects for daylio_parser."""
         db_entries = (
             models.Entry.objects.filter(user=self.user)
-            .order_by('datetime')
-            .prefetch_related('activities')
+            .order_by("datetime")
+            .prefetch_related("activities")
         )
 
         entries = []
