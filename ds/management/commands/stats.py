@@ -58,7 +58,7 @@ class Command(BaseCommand):
 
         print("Highs:")
         for period in stats.find_high_periods():
-            until_today = today - period.end_date
+            until_today = today - period.end
             recent = ""
 
             if until_today.days < 14:
@@ -66,8 +66,8 @@ class Command(BaseCommand):
 
             print(
                 OUTPUT_FMT.format(
-                    period.start_date.strftime("%d/%m/%Y"),
-                    period.end_date.strftime("%d/%m/%Y"),
+                    period.start.strftime("%d/%m/%Y"),
+                    period.end.strftime("%d/%m/%Y"),
                     period.duration,
                     period.avg_mood,
                     recent,
@@ -76,7 +76,7 @@ class Command(BaseCommand):
 
         print("\nLows:")
         for period in stats.find_low_periods():
-            until_today = today - period.end_date
+            until_today = today - period.end
             recent = ""
 
             if until_today.days < 14:
@@ -84,8 +84,8 @@ class Command(BaseCommand):
 
             print(
                 OUTPUT_FMT.format(
-                    period.start_date.strftime("%d/%m/%Y"),
-                    period.end_date.strftime("%d/%m/%Y"),
+                    period.start.strftime("%d/%m/%Y"),
+                    period.end.strftime("%d/%m/%Y"),
                     period.duration,
                     period.avg_mood,
                     recent,
