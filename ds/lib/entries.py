@@ -31,10 +31,10 @@ class EntryConverter:
             # TODO: We need tzinfo saved either in user settings
             # or for each entry
             entry = Entry(
-                db_entry.datetime,
-                self.mood_config.get(db_entry.mood_name),
-                [a.name for a in db_entry.activities.all()],
-                db_entry.notes,
+                datetime=db_entry.datetime,
+                mood=self.mood_config.get(db_entry.mood_name),
+                activities=[a.name for a in db_entry.activities.all()],
+                notes=db_entry.notes,
             )
 
             entries.append(entry)
