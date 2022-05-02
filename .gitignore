@@ -10,3 +10,4 @@ cachegrind.out*
 data/db
 .coverage
 moods.json
+.venv
