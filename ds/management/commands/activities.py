@@ -1,6 +1,5 @@
 """Show a list of activities from best to worst."""
 
-import json
 import os
 
 from daylio_parser.config import MoodConfig
@@ -30,13 +29,7 @@ class Command(BaseCommand):
                 print(f'Config file: {kwargs["config"]} doesn\'t exist')
                 return
 
-            with open(kwargs["config"], "r") as fread:
-                data = json.load(fread)
-
-                moods = data.get("moods")
-                colors = data.get("colors")
-
-                config = MoodConfig(moods, colors)
+            config = MoodConfig.from_file(kwargs["config"])
         else:
             config = MoodConfig()
 

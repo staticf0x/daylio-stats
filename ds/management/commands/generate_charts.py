@@ -1,6 +1,5 @@
 """A command to load the data and plot them manually."""
 
-import json
 import os
 import time
 
@@ -12,9 +11,12 @@ import ds.lib
 
 
 class Command(BaseCommand):
+    """Generate the charts manually."""
+
     help = "Generate the charts manually"
 
     def add_arguments(self, parser):
+        """Args."""
         DEFAULT_OUTPUT_NAME = "daylio-plot-{}.png".format(time.strftime("%Y-%m-%d-%H%M%S"))
 
         parser.add_argument("path", type=str, help="Path to the Daylio export")
@@ -24,6 +26,7 @@ class Command(BaseCommand):
         parser.add_argument("--config", "-c", type=str, help="Path to the config file")
 
     def handle(self, *args, **kwargs):
+        """Run the command."""
         if not os.path.exists(kwargs["path"]):
             print(f'Path: {kwargs["path"]} doesn\'t exist')
             return
@@ -35,13 +38,7 @@ class Command(BaseCommand):
                 print(f'Config file: {kwargs["config"]} doesn\'t exist')
                 return
 
-            with open(kwargs["config"], "r") as fread:
-                data = json.load(fread)
-
-                moods = data.get("moods")
-                colors = data.get("colors")
-
-                config = MoodConfig(moods, colors)
+            config = MoodConfig.from_file(kwargs["config"])
         else:
             config = MoodConfig()
 
