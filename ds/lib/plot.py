@@ -71,7 +71,7 @@ class Plot:
         # Quick dirty "optimization"
         # TODO: Make this better
         # Added max() because of issue #9
-        n = max(1, int(len(dates)//40e3))
+        n = max(1, int(len(dates) // 40e3))
 
         dates = dates[::n]
 
