@@ -2,36 +2,36 @@
 name = "daylio-stats"
 version = "1.0.0"
 description = "A Django web app to generate stats from Daylio exports"
-authors = ["staticf0x <44530786+staticf0x@users.noreply.github.com>"]
+authors = ["staticf0x <staticf0x@pm.me>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.11,<3.13"
 numpy = "^1.22"
 matplotlib = "^3.4"
 Django = "^3.2"
-gunicorn = "^20.0.4"
+gunicorn = "^21.2"
 whitenoise = "^5.2.0"
 django-dotenv = "^1.4.2"
 django-extensions = "^3.1.1"
 mysqlclient = "^2.0.3"
 django-debug-toolbar = "^3.2.1"
-daylio-parser = "0.4.1"
+daylio-parser = "0.4.2"
 
-[tool.poetry.dev-dependencies]
-pylint = "^2.13.9"
-green = "^3.4.2"
+[tool.poetry.group.dev.dependencies]
 pycodestyle = "^2.8.0"
 isort = "^5.10.1"
 pydocstyle = "^6.1.1"
+devtools = {extras = ["pygments"], version = "^0.12.2"}
+ruff = "^0.1.6"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 100
-target-version = ["py38", "py39", "py310"]
+target-version = "py311"
 
 [tool.isort]
 profile = "black"
