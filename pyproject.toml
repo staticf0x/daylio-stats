@@ -6,32 +6,52 @@ authors = ["staticf0x <staticf0x@pm.me>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.13"
+python = "^3.12"
 numpy = "^1.22"
-matplotlib = "^3.4"
+matplotlib = "^3.8"
 Django = "^3.2"
-gunicorn = "^21.2"
-whitenoise = "^5.2.0"
+gunicorn = "^21.2.0"
+whitenoise = "^6.6.0"
 django-dotenv = "^1.4.2"
 django-extensions = "^3.1.1"
 mysqlclient = "^2.0.3"
 django-debug-toolbar = "^3.2.1"
-daylio-parser = "0.4.2"
+daylio-parser = "0.4.1"
 
 [tool.poetry.group.dev.dependencies]
-pycodestyle = "^2.8.0"
-isort = "^5.10.1"
-pydocstyle = "^6.1.1"
-devtools = {extras = ["pygments"], version = "^0.12.2"}
-ruff = "^0.1.6"
+black = "^24.3.0"
+isort = "^5.13.2"
+ruff = "^0.3.5"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 100
-target-version = "py311"
+target-version = ["py312"]
 
 [tool.isort]
 profile = "black"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+# For rule groups and specific rules, see:
+# https://beta.ruff.rs/docs/rules/
+select = ["ALL"]
+
+ignore = [
+    "ANN101",  # Missing type annotation for `self` in method
+    "D406",  # Section name should end with a newline
+    "D407",  # Missing dashed underline after section
+    "D203",  # 1 blank line required before class docstring (incompatible with D211)
+    "D213",  # Multi-line docstring summary should start at the second line (incompatible with D212)
+    "D105",  # Missing docstring in magic method
+    "D107",  # Missing docstring in `__init__`
+    "TD",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 10
