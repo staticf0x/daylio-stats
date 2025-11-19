@@ -1,0 +1,28 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+
+<h1 class="title">Activities</h1>
+
+<table class="table is-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Activity</th>
+            <th>Average mood</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for activity, values in activities %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ activity }}</td>
+            <td>
+                {{ values.0|floatformat:2 }} <span class="has-text-grey">± {{ values.1|floatformat:2 }}</span>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

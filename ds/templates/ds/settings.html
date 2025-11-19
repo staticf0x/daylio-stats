@@ -26,11 +26,67 @@
             are concerned about your privacy.
         </p>
     </div>
+
+    <h2 class="subtitle is-4">Moods</h2>
+
+    {% for i, name, value in form.get_mood_fields %}
+    <div class="field is-horizontal">
+        <div class="field-body">
+            <div class="field">
+                <div class="control">
+                    <input name="mood_{{ i }}_name" type="text" value="{{ name }}" class="input">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input name="mood_{{ i }}_value" type="number" value="{{ value }}" class="input" min="1" max="5">
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
     <div class="field">
         <div class="control">
             <button class="button is-success">Save</button>
         </div>
     </div>
+
+    {% csrf_token %}
+</form>
+
+<hr>
+
+<h2 class="subtitle is-4">Delete account</h2>
+
+<div class="content">
+    <p class="has-text-danger">
+        By deleting your account, all your associated data will be deleted permanently,
+        without any way of restoring them.
+    </p>
+</div>
+
+{% if error %}
+<div class="notification is-danger">
+{{ error }}
+</div>
+{% endif %}
+
+<form action="{% url 'ds:delete_account' %}" method="post">
+    <div class="field">
+        <label class="label">To confirm account deletion, please enter your password:</label>
+    </div>
+
+    <div class="field has-addons">
+        <div class="control">
+            <input class="input is-danger" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="control">
+            <button class="button is-danger">Delete</button>
+        </div>
+    </div>
+
     {% csrf_token %}
 </form>
 {% endblock content %}

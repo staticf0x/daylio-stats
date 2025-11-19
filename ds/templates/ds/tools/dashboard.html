@@ -1,0 +1,40 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+<h1 class="title">Dashboard</h1>
+
+{% if count > 0 %}
+<article class="message">
+    <div class="message-header">
+        <p>Overview</p>
+    </div>
+
+    <div class="message-body">
+        <p>
+            Total entries: {{ count }}<br>
+            First entry: {{ first.datetime | date:'Y-m-d H:i' }}<br>
+            Last entry: {{ last.datetime | date:'Y-m-d H:i' }}<br>
+            Days since first entry: {{ days_since_first }}
+        </p>
+    </div>
+</article>
+{% else %}
+<article class="message is-info">
+    <div class="message-header">
+        <p>No data yet</p>
+    </div>
+
+    <div class="message-body">
+        <p>
+            You have no entries to show yet.
+        </p>
+
+        <p>
+            <a href="{% url 'ds:upload' %}">Upload a CSV</a>
+            from your Daylio export to get your statistics.
+        </p>
+    </div>
+</article>
+{% endif %}
+
+{% endblock content %}

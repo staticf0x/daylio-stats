@@ -1,20 +1,29 @@
-# -*- coding: utf-8 -*-
-"""
-URL config for the ds (main) app
-"""
+"""URL config for the ds (main) app."""
 
 from django.urls import path
 
-from ds import views
+from ds import api, views
 
-app_name = 'ds'
+app_name = "ds"
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('dashboard/', views.dashboard, name='dashboard'),
-    path('about/', views.about, name='about'),
-    path('process/', views.process, name='process'),
-    path('settings/', views.settings, name='settings'),
-    path('login/', views.login_view, name='login'),
-    path('logout/', views.logout_view, name='logout'),
+    # Static pages
+    path("", views.static.index, name="index"),
+    path("about/", views.static.about, name="about"),
+    # Anonymous processing
+    path("process/", views.anonymous.process, name="process"),
+    # Tools for logged-in users
+    path("dashboard/", views.tools.dashboard, name="dashboard"),
+    path("upload/", views.tools.upload, name="upload"),
+    path("charts/mood/", views.tools.mood_chart, name="mood_chart"),
+    path("activities/", views.tools.activities, name="activities"),
+    path("export/", views.tools.export, name="export"),
+    # User views
+    path("settings/", views.users.settings, name="settings"),
+    path("settings/delete/", views.users.delete_account, name="delete_account"),
+    path("login/", views.users.login_view, name="login"),
+    path("logout/", views.users.logout_view, name="logout"),
+    path("register/", views.users.register, name="register"),
+    # API
+    path("api/data/moods", api.data.moods, name="api_data_moods"),
 ]

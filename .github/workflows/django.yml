@@ -31,11 +31,15 @@ jobs:
         poetry run ./manage.py test
       env:
         DS_SECRET_KEY: test
-    - name: Check PEP8
+    - name: Check flake8
       run: |
-        poetry run pycodestyle --exclude=ds/migrations/ dayliostats/ ds/
-      env:
-        DS_SECRET_KEY: test
+        poetry run flake8 --extend-exclude=ds/migrations ds
     - name: Check isort
       run: |
-        poetry run isort --check-only . --skip=ds/migrations/ --skip=node_modules/
+        poetry run isort --check-only --skip ds/migrations ds
+    - name: Check black
+      run: |
+        poetry run black --check --diff --extend-exclude=ds/migrations ds
+    - name: Check PEP257
+      run: |
+        poetry run pydocstyle ds

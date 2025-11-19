@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-A class for plotting the data
-"""
+"""A class for plotting the data."""
 
 import io
 from typing import List
@@ -15,11 +12,10 @@ from daylio_parser.stats import Stats
 
 
 class Plot:
-    """
-    A class for interpolating and plotting the data
-    """
+    """A class for interpolating and plotting the data."""
 
     def __init__(self, entries: List[Entry], plots=(5,), config: MoodConfig = None):
+        """Create the object with entries."""
         self.entries = entries
         self.plots = plots
 
@@ -31,28 +27,19 @@ class Plot:
         self.stats = Stats(entries, self.config)
         self.plotdata = PlotData(entries, self.config)
 
-    def plot_average_moods(self, output_name=None):
-        """
-        Plot the average mood data into a PNG file.
-        If output_name is not provided, returns a buffer
-        with the image data. Otherwise returns the output_name.
-
-        TODO: Might not be a good idea to return two different things
-        """
-
+    def plot_average_moods(self) -> io.BytesIO:
+        """Plot the average mood data into a PNG file. Returns a buffer with the image data."""
         count_plots = 1 + len(self.plots)
 
-        _, axes = plt.subplots(count_plots,
-                               1,
-                               figsize=(12, 4*count_plots))
+        _, axes = plt.subplots(count_plots, 1, figsize=(12, 4 * count_plots))
 
         dates, masked_data = self.__plot_data()
         plot_args = self.__plot_args(dates, masked_data)
 
         axes[0].plot(*plot_args)
-        axes[0].set_title('Average mood in each day')
-        axes[0].set_xlabel('Date')
-        axes[0].set_ylabel('Mood')
+        axes[0].set_title("Average mood in each day")
+        axes[0].set_xlabel("Date")
+        axes[0].set_ylabel("Mood")
         axes[0].set_yticks(np.arange(1, 6, 1))
         axes[0].grid()
 
@@ -60,15 +47,9 @@ class Plot:
 
         plt.tight_layout()
 
-        if output_name:
-            fwrite = output_name
-        else:
-            fwrite = io.BytesIO()
-
+        fwrite = io.BytesIO()
         plt.savefig(fwrite, dpi=120)
-
-        if not output_name:
-            fwrite.seek(0)
+        fwrite.seek(0)
 
         return fwrite
 
@@ -78,9 +59,9 @@ class Plot:
             plot_args = self.__plot_args(dates, masked_data)
 
             axes[i].plot(*plot_args)
-            axes[i].set_title(f'Rolling average of moods, window size = {n}')
-            axes[i].set_xlabel('Date')
-            axes[i].set_ylabel('Mood')
+            axes[i].set_title(f"Rolling average of moods, window size = {n}")
+            axes[i].set_xlabel("Date")
+            axes[i].set_ylabel("Mood")
             axes[i].set_yticks(np.arange(1, 6, 1))
             axes[i].grid()
 
@@ -90,7 +71,7 @@ class Plot:
         # Quick dirty "optimization"
         # TODO: Make this better
         # Added max() because of issue #9
-        n = max(1, int(len(dates)//40e3))
+        n = max(1, int(len(dates) // 40e3))
 
         dates = dates[::n]
 

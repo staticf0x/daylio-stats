@@ -14,6 +14,7 @@
 
     <!-- JS -->
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/chart.min.js' %}"></script>
     <script src="{% static 'js/ds.js' %}"></script>
 </head>
 
@@ -30,15 +31,7 @@
         <div id="main-nav" class="navbar-menu">
             <div class="navbar-start">
                 {% if user.is_authenticated %}
-                <a class="navbar-item has-text-info" href="{% url 'ds:dashboard' %}">
-                    <span class="icon">
-                        <i class="fas fa-tachometer-alt"></i>
-                    </span>
-
-                    <span>
-                        Dashboard
-                    </span>
-                </a>
+                {% include 'ds/parts/user-toolbar.html' %}
                 {% else %}
                 <a class="navbar-item has-text-danger" href="{% url 'ds:index' %}">
                     <span class="icon">
@@ -62,31 +55,7 @@
                 </a>
 
                 {% if user.is_authenticated %}
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        <i class="fas fa-user profile-icon"></i> {{ user.username }}
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a href="{% url 'ds:settings' %}" class="navbar-item">
-                            <span class="icon">
-                                <i class="fas fa-cog"></i>
-                            </span>
-
-                            <span>Settings</span>
-                        </a>
-
-                        <hr class="navbar-divider">
-
-                        <a href="{% url 'ds:logout' %}" class="navbar-item">
-                            <span class="icon">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </span>
-
-                            <span>Logout</span>
-                        </a>
-                    </div>
-                </div>
+                {% include 'ds/parts/user-menu.html' %}
                 {% else %}
                 <a href="{% url 'ds:login' %}" class="navbar-item">
                     <span class="icon">
@@ -100,10 +69,27 @@
         </div>
     </nav>
 
+    {% if user.is_authenticated %}
+    <div class="columns">
+        <div class="column is-2 pl-5 mt-4">
+            {% include 'ds/parts/user-tools.html' %}
+        </div>
+        <div class="column is-8">
+            <div class="section">
+                <div class="container">
+    {% else %}
     <div class="section">
         <div class="container">
+    {% endif %}
+
             {% block content %}
             {% endblock content %}
+
+            {% if user.is_authenticated %}
+                </div>
+            </div>
+            {% endif %}
+
         </div>
     </div>
 </body>

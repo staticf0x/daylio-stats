@@ -1,0 +1,79 @@
+{% extends 'ds/base.html' %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-half is-offset-one-quarter">
+        <h1 class="title">Create new account</h1>
+
+        {% if form.non_field_errors %}
+        <div class="notification is-danger">
+            {% for error in form.non_field_errors %}
+            {{ error }}<br>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="{% url 'ds:register' %}" method="post">
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input name="username" type="text" class="input" placeholder="Username" autofocus>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </p>
+
+                {% if form.username.errors %}
+                <p class="help is-danger">
+                {% for error in form.username.errors %}
+                {{ error }}<br>
+                {% endfor %}
+                </p>
+                {% endif %}
+            </div>
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input name="password" type="password" class="input" placeholder="Password">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                </p>
+
+                {% if form.password.errors %}
+                <p class="help is-danger">
+                {% for error in form.password.errors %}
+                {{ error }}<br>
+                {% endfor %}
+                </p>
+                {% endif %}
+            </div>
+            <div class="field">
+                <p class="control has-icons-left">
+                    <input name="password_confirm" type="password" class="input" placeholder="Confirm password">
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                </p>
+
+                {% if form.password_confirm.errors %}
+                <p class="help is-danger">
+                {% for error in form.password_confirm.errors %}
+                {{ error }}<br>
+                {% endfor %}
+                </p>
+                {% endif %}
+
+                <p class="help">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    Please read the <a class="has-text-weight-bold" href="{% url 'ds:about' %}#privacy-policy" target="_blank">privacy policy</a> before continuing.
+                </p>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button class="button is-success">Create account</button>
+                </div>
+            </div>
+            {% csrf_token %}
+        </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{# This is the right dropdown menu #}
+
+<div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">
+        <i class="fas fa-user profile-icon"></i> {{ user.username }}
+    </a>
+
+    <div class="navbar-dropdown">
+        <a href="{% url 'ds:settings' %}" class="navbar-item">
+            <span class="icon">
+                <i class="fas fa-cog"></i>
+            </span>
+
+            <span>Settings</span>
+        </a>
+
+        <hr class="navbar-divider">
+
+        <a href="{% url 'ds:logout' %}" class="navbar-item">
+            <span class="icon">
+                <i class="fas fa-sign-out-alt"></i>
+            </span>
+
+            <span>Logout</span>
+        </a>
+    </div>
+</div>
