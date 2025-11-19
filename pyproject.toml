@@ -1,12 +1,23 @@
-[tool.poetry]
+[project]
 name = "daylio-stats"
 version = "1.0.0"
 description = "A Django web app to generate stats from Daylio exports"
-authors = ["Meesha <44530786+meesha7@users.noreply.github.com>"]
+authors = ["staticf0x <staticf0x@pm.me>"]
 license = "MIT"
+requires-python = ">=3.12"
+dependencies = [
+    "daylio-parser>=0.4.2",
+    "django<4",
+    "django-dotenv>=1.4.2",
+    "django-extensions>=3.2.3",
+    "gunicorn>=23.0.0",
+    "matplotlib>=3.10.7",
+    "mysqlclient>=2.2.7",
+    "numpy<2",
+    "whitenoise>=6.11.0",
+]
 
 [tool.poetry.dependencies]
-python = "^3.9"
 numpy = "^1.22"
 matplotlib = "^3.4"
 Django = "^3.2"
@@ -17,13 +28,24 @@ django-extensions = "^3.1.1"
 daylio-parser = "0.2.0"
 mysqlclient = "^2.0.3"
 
-[tool.poetry.dev-dependencies]
-pylint = "^2.13.9"
-green = "^3.4.2"
-pycodestyle = "^2.8.0"
-isort = "^5.10.1"
-pydocstyle = "^6.1.1"
+[tool.ruff]
+line-length = 100
+target-version = "py312"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+# For rule groups and specific rules, see:
+# https://beta.ruff.rs/docs/rules/
+select = ["ALL"]
+
+ignore = [
+    "ANN101",  # Missing type annotation for `self` in method
+    "D406",  # Section name should end with a newline
+    "D407",  # Missing dashed underline after section
+    "D203",  # 1 blank line required before class docstring (incompatible with D211)
+    "D213",  # Multi-line docstring summary should start at the second line (incompatible with D212)
+    "D105",  # Missing docstring in magic method
+    "D107",  # Missing docstring in `__init__`
+    "TD",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 10
